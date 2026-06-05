@@ -38,3 +38,4 @@ I:\Cpp\WhatToEat\obj\Debug\net8.0-windows\refint\WhatToEat.dll
 I:\Cpp\WhatToEat\obj\Debug\net8.0-windows\WhatToEat.pdb
 I:\Cpp\WhatToEat\obj\Debug\net8.0-windows\WhatToEat.genruntimeconfig.cache
 I:\Cpp\WhatToEat\obj\Debug\net8.0-windows\ref\WhatToEat.dll
+I:\Cpp\WhatToEat\obj\Debug\net8.0-windows\WhatToEat.sourcelink.json
