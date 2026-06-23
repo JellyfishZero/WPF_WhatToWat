@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace WhatToEat
 {
     /// <summary>
-    /// DeleteWindow.xaml 的互動邏輯
+    /// AddItemWindow.xaml 的互動邏輯
     /// </summary>
-    public partial class DeleteWindow : Window
+    public partial class AddRestaurantWindow : Window
     {
-        public DeleteWindow()
+        public AddRestaurantWindow()
         {
             InitializeComponent();
         }
