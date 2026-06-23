@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WhatToEat"
         mc:Ignorable="d"
-        Title="黑暗精靈！今天吃什麼？" Height="450" Width="800">
-    <Grid>
+        Title="今天吃什麼？" Height="450" Width="800">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="工具">
+                <MenuItem Header="新增餐廳"/>
+                <MenuItem Header="修改餐廳"/>
+                <Separator/>
+                <MenuItem Header="查詢餐廳"/>
+                <Separator/>
+                <MenuItem Header="刪除餐廳"/>
+            </MenuItem>
+        </Menu>
 
-    </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="397*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="現在要吃啥呢？"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Width="120" Grid.Column="1" Margin="334,0,0,0"/>
+            <Label Content="推薦吃："
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   MinWidth="0"
+                   Margin="365,141,0,0" Grid.Column="1"/>
+        </Grid>
+    </DockPanel>
 </Window>
