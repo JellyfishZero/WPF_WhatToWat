@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace WhatToEat.Models
 {
+    public class Restaurant
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = "";
+    }
+
     class RestaurantModel
     {
     }
