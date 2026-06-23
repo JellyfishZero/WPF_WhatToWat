@@ -13,6 +13,7 @@ namespace WhatToEat
         {
             base.OnStartup(e);
 
+            // 連接或產生SQLite DB
             using var db = new Data.AppDbContext();
             db.Database.EnsureCreated();
         }

@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace WhatToEat.Models
 {
-    public class Restaurant
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; } = "";
-    }
-
     class RestaurantModel
     {
+        // 處理資料相關業務邏輯
     }
 }
