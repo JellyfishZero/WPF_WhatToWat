@@ -19,3 +19,5 @@ packages/
 *.log
 *.tmp
 *.temp
+
+AGENTS.md
