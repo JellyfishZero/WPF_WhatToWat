@@ -9,29 +9,29 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="工具">
-                <MenuItem Header="新增餐廳"/>
-                <MenuItem Header="修改餐廳"/>
+                <MenuItem Header="新增餐廳" Click="AddItemClick"/>
+                <MenuItem Header="修改餐廳" Click="ModifyItemClick"/>
                 <Separator/>
-                <MenuItem Header="查詢餐廳"/>
+                <MenuItem Header="查看所有餐廳" Click="QueryItemClick"/>
                 <Separator/>
-                <MenuItem Header="刪除餐廳"/>
+                <MenuItem Header="刪除餐廳" Click="DeleteItemClick"/>
             </MenuItem>
         </Menu>
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="397*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="17*"/>
+                <ColumnDefinition Width="777*"/>
             </Grid.ColumnDefinitions>
             <Button Content="現在要吃啥呢？"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Width="120" Grid.Column="1" Margin="334,0,0,0"/>
-            <Label Content="推薦吃："
+                    Width="120" Grid.Column="2" Margin="320,0,0,0"/>
+            <Label x:Name="DialogLabel" Content="推薦吃："
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
-                   MinWidth="0"
-                   Margin="365,141,0,0" Grid.Column="1"/>
+                   MinWidth="0" Grid.Column="2" Margin="351,146,0,0"/>
         </Grid>
     </DockPanel>
 </Window>
