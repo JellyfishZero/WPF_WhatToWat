@@ -14,25 +14,25 @@ namespace WhatToEat
 
         private void AddItemClick(object sender, RoutedEventArgs e)
         {
-            AddWindow addWindow = new AddWindow();
+            AddRestaurantWindow addWindow = new AddRestaurantWindow();
             addWindow.Show();
         }
 
         private void ModifyItemClick(object sender, RoutedEventArgs e)
         {
-            ModifyWindow modifyWindow = new ModifyWindow();
+            ModifyRestaurantWindow modifyWindow = new ModifyRestaurantWindow();
             modifyWindow.Show();
         }
 
         private void QueryItemClick(object sender, RoutedEventArgs e)
         {
-            QueryWindow queryWindow = new QueryWindow();
+            QueryRestaurantWindow queryWindow = new QueryRestaurantWindow();
             queryWindow.Show();
         }
 
         private void DeleteItemClick(object sender, RoutedEventArgs e)
         {
-            DeleteWindow deleteWindow = new DeleteWindow();
+            DeleteRestaurantWindow deleteWindow = new DeleteRestaurantWindow();
             deleteWindow.Show();
         }
     }

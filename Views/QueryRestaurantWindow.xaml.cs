@@ -17,9 +17,9 @@ namespace WhatToEat
     /// <summary>
     /// QueryWindow.xaml 的互動邏輯
     /// </summary>
-    public partial class QueryWindow : Window
+    public partial class QueryRestaurantWindow : Window
     {
-        public QueryWindow()
+        public QueryRestaurantWindow()
         {
             InitializeComponent();
         }

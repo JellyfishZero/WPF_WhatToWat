@@ -17,9 +17,9 @@ namespace WhatToEat
     /// <summary>
     /// ModifyWindow.xaml 的互動邏輯
     /// </summary>
-    public partial class ModifyWindow : Window
+    public partial class ModifyRestaurantWindow : Window
     {
-        public ModifyWindow()
+        public ModifyRestaurantWindow()
         {
             InitializeComponent();
         }
