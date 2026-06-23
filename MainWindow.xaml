@@ -20,17 +20,18 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="397*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="17*"/>
+                <ColumnDefinition Width="777*"/>
             </Grid.ColumnDefinitions>
             <Button Content="現在要吃啥呢？"
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Width="120" Grid.Column="1"/>
+                    Width="120" Grid.Column="2" Margin="320,0,0,0"/>
             <Label x:Name="DialogLabel" Content="推薦吃："
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   MinWidth="0" Grid.Column="1" Margin="0,0,0,100"/>
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   MinWidth="0" Grid.Column="2" Margin="351,146,0,0"/>
         </Grid>
     </DockPanel>
 </Window>
