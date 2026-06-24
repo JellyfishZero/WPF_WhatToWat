@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WhatToEat
 {
@@ -7,33 +8,40 @@ namespace WhatToEat
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly IServiceProvider _services;
+
+        public MainWindow(IServiceProvider services)
         {
             InitializeComponent();
+            _services = services;
         }
 
         private void AddItemClick(object sender, RoutedEventArgs e)
         {
-            AddRestaurantWindow addWindow = new AddRestaurantWindow();
-            addWindow.Show();
+            ShowWindow<AddRestaurantWindow>();
         }
 
         private void ModifyItemClick(object sender, RoutedEventArgs e)
         {
-            ModifyRestaurantWindow modifyWindow = new ModifyRestaurantWindow();
-            modifyWindow.Show();
+            ShowWindow<ModifyRestaurantWindow>();
         }
 
         private void QueryItemClick(object sender, RoutedEventArgs e)
         {
-            QueryRestaurantWindow queryWindow = new QueryRestaurantWindow();
-            queryWindow.Show();
+            ShowWindow<QueryRestaurantWindow>();
         }
 
         private void DeleteItemClick(object sender, RoutedEventArgs e)
         {
-            DeleteRestaurantWindow deleteWindow = new DeleteRestaurantWindow();
-            deleteWindow.Show();
+            ShowWindow<DeleteRestaurantWindow>();
+        }
+
+        private void ShowWindow<TWindow>()
+            where TWindow : Window
+        {
+            var window = _services.GetRequiredService<TWindow>();
+            window.Owner = this;
+            window.Show();
         }
     }
 }

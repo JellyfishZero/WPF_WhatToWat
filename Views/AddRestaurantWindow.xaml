@@ -5,8 +5,244 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WhatToEat"
         mc:Ignorable="d"
-        Title="AddWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="新增餐廳" Height="550" Width="800" ResizeMode="NoResize">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0"
+               Grid.Column="0"
+               Content="餐廳名稱"
+               VerticalAlignment="Top"
+               Margin="0,1,16,0" />
+        <TextBox x:Name="RestaurantNameTextBox"
+                 Text="{Binding RestaurantName, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="0"
+                 Grid.Column="1"
+                 Height="28"
+                 Margin="0,0,0,12" Grid.ColumnSpan="2" />
+
+        <Label Grid.Row="1"
+               Grid.Column="0"
+               Content="營業時間"
+               VerticalAlignment="Top"
+               Margin="0,0,16,0" />
+        <StackPanel Grid.Row="1"
+                    Grid.Column="1"
+                    VerticalAlignment="Top"
+                    Margin="0,5,16,12">
+            <CheckBox x:Name="HasBusinessHoursCheckBox"
+                      IsChecked="{Binding HasBusinessHours, Mode=TwoWay}"
+                      Content="需要紀錄營業時間" />
+            <TextBlock Text="未勾選時視為每日全天營業"
+                       Foreground="Gray"
+                       FontSize="12"
+                       TextWrapping="Wrap"
+                       Margin="22,4,0,0" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Grid.Column="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0,0,0,0"
+                    IsEnabled="{Binding IsChecked, ElementName=HasBusinessHoursCheckBox}">
+            <TextBlock Text="預設"
+                       VerticalAlignment="Center"
+                       Margin="0,0,8,0" />
+            <ComboBox x:Name="DefaultStartHourComboBox"
+                      Width="48"
+                      Height="28"
+                      ItemsSource="{Binding HourItems}"
+                      SelectedItem="{Binding DefaultStartHour, Mode=TwoWay}" />
+            <TextBlock Text=":"
+                       VerticalAlignment="Center"
+                       Margin="4,0" />
+            <ComboBox x:Name="DefaultStartMinuteComboBox"
+                      Width="48"
+                      Height="28"
+                      ItemsSource="{Binding MinuteItems}"
+                      SelectedItem="{Binding DefaultStartMinute, Mode=TwoWay}"/>
+            <TextBlock Text="~"
+                       VerticalAlignment="Center"
+                       Margin="8,0" />
+            <ComboBox x:Name="DefaultEndHourComboBox"
+                      Width="48"
+                      Height="28"
+                      ItemsSource="{Binding HourItems}"
+                      SelectedItem="{Binding DefaultEndHour, Mode=TwoWay}"/>
+            <TextBlock Text=":"
+                       VerticalAlignment="Center"
+                       Margin="4,0" />
+            <ComboBox x:Name="DefaultEndMinuteComboBox"
+                      Width="48"
+                      Height="28"
+                      ItemsSource="{Binding MinuteItems}"
+                      SelectedItem="{Binding DefaultEndMinute, Mode=TwoWay}"/>
+            <Button Content="套用平日"
+                    Width="76"
+                    Height="28"
+                    Margin="12,0,0,0"
+                    Click="OnApplyWeekdaysBusinessHoursClicked" />
+            <Button Content="套用全週"
+                    Width="76"
+                    Height="28"
+                    Margin="8,0,0,0"
+                    Click="OnApplyAllBusinessHoursClicked" />
+        </StackPanel>
+
+        <Label Grid.Row="2"
+               Grid.Column="0"
+               Content="每週營業時間"
+               VerticalAlignment="Top"
+               Margin="0,0,16,0" />
+        <Grid Grid.Row="2"
+              Grid.Column="1"
+              Margin="0,0,0,12"
+              Grid.ColumnSpan="2"
+              IsEnabled="{Binding HasBusinessHours}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="星期" FontWeight="Bold" Margin="0,0,8,8" />
+                <TextBlock Grid.Column="1" Text="營業" FontWeight="Bold" Margin="0,0,8,8" />
+                <TextBlock Grid.Column="2" Text="開始時間" FontWeight="Bold" Margin="0,0,8,8" />
+                <TextBlock Grid.Column="3" Text="結束時間" FontWeight="Bold" Margin="0,0,0,8" />
+            </Grid>
+
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl ItemsSource="{Binding BusinessHours}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0"
+                                           Text="{Binding DayName}"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,8,0" />
+
+                                <CheckBox Grid.Column="1"
+                                          IsChecked="{Binding IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          VerticalAlignment="Center"
+                                          Margin="0,0,8,0" />
+
+                                <Grid Grid.Column="2" Margin="0,0,8,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox Grid.Column="0"
+                                              Height="28"
+                                              ItemsSource="{Binding DataContext.HourItems, RelativeSource={RelativeSource AncestorType=Window}}"
+                                              SelectedItem="{Binding StartHour, Mode=TwoWay}" />
+                                    <TextBlock Grid.Column="1"
+                                               Text=":"
+                                               VerticalAlignment="Center"
+                                               Margin="4,0" />
+                                    <ComboBox Grid.Column="2"
+                                              Height="28"
+                                              ItemsSource="{Binding DataContext.MinuteItems, RelativeSource={RelativeSource AncestorType=Window}}"
+                                              SelectedItem="{Binding StartMinute, Mode=TwoWay}" />
+                                </Grid>
+
+                                <Grid Grid.Column="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox Grid.Column="0"
+                                              Height="28"
+                                              ItemsSource="{Binding DataContext.HourItems, RelativeSource={RelativeSource AncestorType=Window}}"
+                                              SelectedItem="{Binding EndHour, Mode=TwoWay}" />
+                                    <TextBlock Grid.Column="1"
+                                               Text=":"
+                                               VerticalAlignment="Center"
+                                               Margin="4,0" />
+                                    <ComboBox Grid.Column="2"
+                                              Height="28"
+                                              ItemsSource="{Binding DataContext.MinuteItems, RelativeSource={RelativeSource AncestorType=Window}}"
+                                              SelectedItem="{Binding EndMinute, Mode=TwoWay}" />
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+
+        <Label Grid.Row="3"
+               Grid.Column="0"
+               Content="喜愛程度"
+               VerticalAlignment="Top"
+               Margin="0,2,16,0" />
+        <Grid Grid.Row="3"
+              Grid.Column="1"
+              Grid.ColumnSpan="2"
+              Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Slider x:Name="PreferenceScoreSlider"
+                    Value="{Binding PreferenceScore, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Minimum="1"
+                    Maximum="5"
+                    TickFrequency="1"
+                    IsSnapToTickEnabled="True"
+                    TickPlacement="BottomRight"
+                    VerticalAlignment="Center"
+                    Margin="0,0,16,0" />
+            <TextBlock Grid.Column="1"
+                       Width="24"
+                       Text="{Binding PreferenceScore}"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center" />
+        </Grid>
+
+        <Button x:Name="AddRestaurantButton"
+                Grid.Row="5"
+                Grid.Column="2"
+                Content="新增"
+                Width="96"
+                Height="32"
+                HorizontalAlignment="Right"
+                Click="OnAddNewRestaurantBtnClicked"/>
     </Grid>
 </Window>

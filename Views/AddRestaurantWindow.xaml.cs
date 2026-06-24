@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using WhatToEat.ViewModels;
 
 namespace WhatToEat
 {
@@ -19,9 +8,53 @@ namespace WhatToEat
     /// </summary>
     public partial class AddRestaurantWindow : Window
     {
-        public AddRestaurantWindow()
+        private readonly AddRestaurantVM _addRestaurantVM;
+
+        public AddRestaurantWindow(AddRestaurantVM addRestaurantVM)
         {
             InitializeComponent();
+            _addRestaurantVM = addRestaurantVM;
+            DataContext = _addRestaurantVM;
+        }
+
+        private void OnAddNewRestaurantBtnClicked(object sender, RoutedEventArgs e)
+        {
+            var result = _addRestaurantVM.AddRestaurant();
+
+            switch (result)
+            {
+                case AddRestaurantResult.EmptyName:
+                case AddRestaurantResult.DuplicatedName:
+                case AddRestaurantResult.InvalidBusinessHours:
+                    MessageBox.Show(_addRestaurantVM.ErrorMessage);
+                    return;
+
+                case AddRestaurantResult.Success:
+                    MessageBox.Show("餐廳已新增");
+                    ClearForm();
+                    RestaurantNameTextBox.Focus();
+                    return;
+            }
+        }
+
+        private void ClearForm()
+        {
+            _addRestaurantVM.Reset();
+        }
+
+        private void OnApplyWeekdaysBusinessHoursClicked(object sender, RoutedEventArgs e)
+        {
+            ApplyDefaultBusinessHours(includeWeekend: false);
+        }
+
+        private void OnApplyAllBusinessHoursClicked(object sender, RoutedEventArgs e)
+        {
+            ApplyDefaultBusinessHours(includeWeekend: true);
+        }
+
+        private void ApplyDefaultBusinessHours(bool includeWeekend)
+        {
+            _addRestaurantVM.ApplyDefaultBusinessHours(includeWeekend);
         }
     }
 }
