@@ -65,15 +65,30 @@ namespace WhatToEat.ViewModels
             EndMinute = "00";
         }
 
+        public bool IsTimeRangeValid()
+        {
+            return GetStartTime() < GetEndTime();
+        }
+
         public BusinessHour ToBusinessHour()
         {
             return new BusinessHour
             {
                 DayOfWeek = DayOfWeek,
                 IsOpen = IsOpen,
-                OpenTime = IsOpen ? new TimeSpan(int.Parse(StartHour), int.Parse(StartMinute), 0) : null,
-                CloseTime = IsOpen ? new TimeSpan(int.Parse(EndHour), int.Parse(EndMinute), 0) : null,
+                OpenTime = IsOpen ? GetStartTime() : null,
+                CloseTime = IsOpen ? GetEndTime() : null,
             };
+        }
+
+        private TimeSpan GetStartTime()
+        {
+            return new TimeSpan(int.Parse(StartHour), int.Parse(StartMinute), 0);
+        }
+
+        private TimeSpan GetEndTime()
+        {
+            return new TimeSpan(int.Parse(EndHour), int.Parse(EndMinute), 0);
         }
     }
 }

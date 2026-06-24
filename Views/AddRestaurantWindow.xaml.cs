@@ -27,11 +27,9 @@ namespace WhatToEat
             switch (result)
             {
                 case AddRestaurantResult.EmptyName:
-                    MessageBox.Show("請輸入餐廳名稱");
-                    return;
-
                 case AddRestaurantResult.DuplicatedName:
-                    MessageBox.Show("店家名稱已存在");
+                case AddRestaurantResult.InvalidBusinessHours:
+                    MessageBox.Show(_addRestaurantVM.ErrorMessage);
                     return;
 
                 case AddRestaurantResult.Success:

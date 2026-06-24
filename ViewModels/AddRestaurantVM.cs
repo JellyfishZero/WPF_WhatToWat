@@ -15,6 +15,7 @@ namespace WhatToEat.ViewModels
         Success,
         EmptyName,
         DuplicatedName,
+        InvalidBusinessHours,
     }
 
     public class AddRestaurantVM : ViewModelBase
@@ -64,6 +65,7 @@ namespace WhatToEat.ViewModels
         private string _restaurantName = "";
         private int _preferenceScore = 3;
         private bool _hasBusinessHours;
+        private string _errorMessage = "";
 
         public AddRestaurantVM(RestaurantService restaurantService)
         {
@@ -88,18 +90,46 @@ namespace WhatToEat.ViewModels
             set => SetField(ref _hasBusinessHours, value);
         }
 
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            private set => SetField(ref _errorMessage, value);
+        }
+
         public AddRestaurantResult AddRestaurant()
         {
+            ErrorMessage = "";
+
             string name = RestaurantName.Trim();
 
             if (string.IsNullOrWhiteSpace(name))
             {
+                ErrorMessage = "請輸入餐廳名稱";
                 return AddRestaurantResult.EmptyName;
             }
 
             if (_restaurantService.NameExists(name))
             {
+                ErrorMessage = "店家名稱已存在";
                 return AddRestaurantResult.DuplicatedName;
+            }
+
+            if (HasBusinessHours)
+            {
+                var invalidBusinessHours = BusinessHours
+                    .Where(x => x.IsOpen && !x.IsTimeRangeValid())
+                    .Select(x => x.DayName)
+                    .ToList();
+
+                if (invalidBusinessHours.Count > 0)
+                {
+                    ErrorMessage =
+                        "以下營業日的開始時間必須早於結束時間："
+                        + Environment.NewLine
+                        + string.Join(Environment.NewLine, invalidBusinessHours);
+
+                    return AddRestaurantResult.InvalidBusinessHours;
+                }
             }
 
             var restaurant = new Restaurant
@@ -121,6 +151,7 @@ namespace WhatToEat.ViewModels
 
         public void Reset()
         {
+            ErrorMessage = "";
             RestaurantName = "";
             PreferenceScore = 3;
             HasBusinessHours = false;
