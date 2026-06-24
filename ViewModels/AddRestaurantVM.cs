@@ -17,8 +17,49 @@ namespace WhatToEat.ViewModels
         DuplicatedName,
     }
 
-    public class AddRestaurantVM : INotifyPropertyChanged
+    public class AddRestaurantVM : ViewModelBase
     {
+        public List<string> HourItems { get; } =
+        [
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+        ];
+
+        public List<string> MinuteItems { get; } = ["00", "30"];
+
+        public List<BusinessHourInputVM> BusinessHours { get; } =
+        [
+            new(DayOfWeek.Monday, "週一"),
+            new(DayOfWeek.Tuesday, "週二"),
+            new(DayOfWeek.Wednesday, "週三"),
+            new(DayOfWeek.Thursday, "週四"),
+            new(DayOfWeek.Friday, "週五"),
+            new(DayOfWeek.Saturday, "週六"),
+            new(DayOfWeek.Sunday, "週日"),
+        ];
+
         private readonly RestaurantService _restaurantService;
         private string _restaurantName = "";
         private int _preferenceScore = 3;
@@ -28,8 +69,6 @@ namespace WhatToEat.ViewModels
         {
             _restaurantService = restaurantService;
         }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         public string RestaurantName
         {
@@ -49,7 +88,7 @@ namespace WhatToEat.ViewModels
             set => SetField(ref _hasBusinessHours, value);
         }
 
-        public AddRestaurantResult AddRestaurant(List<BusinessHour> businessHours)
+        public AddRestaurantResult AddRestaurant()
         {
             string name = RestaurantName.Trim();
 
@@ -72,7 +111,7 @@ namespace WhatToEat.ViewModels
 
             if (HasBusinessHours)
             {
-                restaurant.BusinessHours.AddRange(businessHours);
+                restaurant.BusinessHours.AddRange(BusinessHours.Select(x => x.ToBusinessHour()));
             }
 
             _restaurantService.Add(restaurant);
@@ -85,21 +124,38 @@ namespace WhatToEat.ViewModels
             RestaurantName = "";
             PreferenceScore = 3;
             HasBusinessHours = false;
+
+            foreach (var businessHour in BusinessHours)
+            {
+                businessHour.Reset();
+            }
         }
 
-        private void SetField<T>(
-            ref T field,
-            T value,
-            [CallerMemberName] string? propertyName = null
+        public void ApplyDefaultBusinessHours(
+            bool includeWeekend,
+            string startHour,
+            string startMinute,
+            string endHour,
+            string endMinute
         )
         {
-            if (EqualityComparer<T>.Default.Equals(field, value))
+            foreach (var businessHour in BusinessHours)
             {
-                return;
-            }
+                bool isWeekend =
+                    businessHour.DayOfWeek == DayOfWeek.Saturday
+                    || businessHour.DayOfWeek == DayOfWeek.Sunday;
 
-            field = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                if (!includeWeekend && isWeekend)
+                {
+                    continue;
+                }
+
+                businessHour.IsOpen = true;
+                businessHour.StartHour = startHour;
+                businessHour.StartMinute = startMinute;
+                businessHour.EndHour = endHour;
+                businessHour.EndMinute = endMinute;
+            }
         }
     }
 }

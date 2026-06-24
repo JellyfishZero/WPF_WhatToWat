@@ -4,42 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WhatToEat"
-        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Title="新增餐廳" Height="550" Width="800" ResizeMode="NoResize">
-    <Window.Resources>
-        <x:Array x:Key="HourItems" Type="{x:Type sys:String}">
-            <sys:String>00</sys:String>
-            <sys:String>01</sys:String>
-            <sys:String>02</sys:String>
-            <sys:String>03</sys:String>
-            <sys:String>04</sys:String>
-            <sys:String>05</sys:String>
-            <sys:String>06</sys:String>
-            <sys:String>07</sys:String>
-            <sys:String>08</sys:String>
-            <sys:String>09</sys:String>
-            <sys:String>10</sys:String>
-            <sys:String>11</sys:String>
-            <sys:String>12</sys:String>
-            <sys:String>13</sys:String>
-            <sys:String>14</sys:String>
-            <sys:String>15</sys:String>
-            <sys:String>16</sys:String>
-            <sys:String>17</sys:String>
-            <sys:String>18</sys:String>
-            <sys:String>19</sys:String>
-            <sys:String>20</sys:String>
-            <sys:String>21</sys:String>
-            <sys:String>22</sys:String>
-            <sys:String>23</sys:String>
-        </x:Array>
-
-        <x:Array x:Key="MinuteItems" Type="{x:Type sys:String}">
-            <sys:String>00</sys:String>
-            <sys:String>30</sys:String>
-        </x:Array>
-    </Window.Resources>
 
     <Grid Margin="24">
         <Grid.RowDefinitions>
@@ -95,7 +61,7 @@
             <ComboBox x:Name="DefaultStartHourComboBox"
                       Width="48"
                       Height="28"
-                      ItemsSource="{StaticResource HourItems}"
+                      ItemsSource="{Binding HourItems}"
                       SelectedIndex="9" />
             <TextBlock Text=":"
                        VerticalAlignment="Center"
@@ -103,7 +69,7 @@
             <ComboBox x:Name="DefaultStartMinuteComboBox"
                       Width="48"
                       Height="28"
-                      ItemsSource="{StaticResource MinuteItems}"
+                      ItemsSource="{Binding MinuteItems}"
                       SelectedIndex="0" />
             <TextBlock Text="~"
                        VerticalAlignment="Center"
@@ -111,7 +77,7 @@
             <ComboBox x:Name="DefaultEndHourComboBox"
                       Width="48"
                       Height="28"
-                      ItemsSource="{StaticResource HourItems}"
+                      ItemsSource="{Binding HourItems}"
                       SelectedIndex="21" />
             <TextBlock Text=":"
                        VerticalAlignment="Center"
@@ -119,7 +85,7 @@
             <ComboBox x:Name="DefaultEndMinuteComboBox"
                       Width="48"
                       Height="28"
-                      ItemsSource="{StaticResource MinuteItems}"
+                      ItemsSource="{Binding MinuteItems}"
                       SelectedIndex="0" />
             <Button Content="套用平日"
                     Width="76"
@@ -140,191 +106,95 @@
                Margin="0,37,16,0" Grid.RowSpan="2" />
         <Grid Grid.Row="1"
               Grid.Column="1"
-              Margin="0,37,0,12" Grid.ColumnSpan="2" Grid.RowSpan="2"
-              IsEnabled="{Binding IsChecked, ElementName=HasBusinessHoursCheckBox}">
+              Margin="0,37,0,12"
+              Grid.ColumnSpan="2"
+              Grid.RowSpan="2"
+              IsEnabled="{Binding HasBusinessHours}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
-                <ColumnDefinition Width="80" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="星期" FontWeight="Bold" Margin="0,0,8,8" />
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="營業" FontWeight="Bold" Margin="0,0,8,8" />
-            <TextBlock Grid.Row="0" Grid.Column="2" Text="開始時間" FontWeight="Bold" Margin="0,0,8,8" />
-            <TextBlock Grid.Row="0" Grid.Column="3" Text="結束時間" FontWeight="Bold" Margin="0,0,0,8" />
-
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="週一" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <CheckBox x:Name="MondayOpenCheckBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <Grid Grid.Row="1" Grid.Column="2" Margin="0,0,8,8">
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="MondayStartHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="MondayStartMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
-            <Grid Grid.Row="1" Grid.Column="3" Margin="0,0,0,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="MondayEndHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="MondayEndMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
+
+                <TextBlock Grid.Column="0" Text="星期" FontWeight="Bold" Margin="0,0,8,8" />
+                <TextBlock Grid.Column="1" Text="營業" FontWeight="Bold" Margin="0,0,8,8" />
+                <TextBlock Grid.Column="2" Text="開始時間" FontWeight="Bold" Margin="0,0,8,8" />
+                <TextBlock Grid.Column="3" Text="結束時間" FontWeight="Bold" Margin="0,0,0,8" />
             </Grid>
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="週二" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <CheckBox x:Name="TuesdayOpenCheckBox" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <Grid Grid.Row="2" Grid.Column="2" Margin="0,0,8,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="TuesdayStartHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="TuesdayStartMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
-            <Grid Grid.Row="2" Grid.Column="3" Margin="0,0,0,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="TuesdayEndHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="TuesdayEndMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding BusinessHours}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="週三" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <CheckBox x:Name="WednesdayOpenCheckBox" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <Grid Grid.Row="3" Grid.Column="2" Margin="0,0,8,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="WednesdayStartHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="WednesdayStartMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
-            <Grid Grid.Row="3" Grid.Column="3" Margin="0,0,0,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="WednesdayEndHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="WednesdayEndMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
+                            <TextBlock Grid.Column="0"
+                               Text="{Binding DayName}"
+                               VerticalAlignment="Center"
+                               Margin="0,0,8,0" />
 
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="週四" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <CheckBox x:Name="ThursdayOpenCheckBox" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <Grid Grid.Row="4" Grid.Column="2" Margin="0,0,8,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="ThursdayStartHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="ThursdayStartMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
-            <Grid Grid.Row="4" Grid.Column="3" Margin="0,0,0,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="ThursdayEndHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="ThursdayEndMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
+                            <CheckBox Grid.Column="1"
+                              IsChecked="{Binding IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              VerticalAlignment="Center"
+                              Margin="0,0,8,0" />
 
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="週五" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <CheckBox x:Name="FridayOpenCheckBox" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <Grid Grid.Row="5" Grid.Column="2" Margin="0,0,8,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="FridayStartHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="FridayStartMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
-            <Grid Grid.Row="5" Grid.Column="3" Margin="0,0,0,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="FridayEndHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="FridayEndMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
+                            <Grid Grid.Column="2" Margin="0,0,8,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="6" Grid.Column="0" Text="週六" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <CheckBox x:Name="SaturdayOpenCheckBox" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <Grid Grid.Row="6" Grid.Column="2" Margin="0,0,8,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="SaturdayStartHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="SaturdayStartMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
-            <Grid Grid.Row="6" Grid.Column="3" Margin="0,0,0,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="SaturdayEndHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="SaturdayEndMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
+                                <ComboBox Grid.Column="0"
+                                  Height="28"
+                                  ItemsSource="{Binding DataContext.HourItems, RelativeSource={RelativeSource AncestorType=Window}}"
+                                  SelectedItem="{Binding StartHour, Mode=TwoWay}" />
+                                <TextBlock Grid.Column="1"
+                                   Text=":"
+                                   VerticalAlignment="Center"
+                                   Margin="4,0" />
+                                <ComboBox Grid.Column="2"
+                                  Height="28"
+                                  ItemsSource="{Binding DataContext.MinuteItems, RelativeSource={RelativeSource AncestorType=Window}}"
+                                  SelectedItem="{Binding StartMinute, Mode=TwoWay}" />
+                            </Grid>
 
-            <TextBlock Grid.Row="7" Grid.Column="0" Text="週日" VerticalAlignment="Center" Margin="0,0,8,0" />
-            <CheckBox x:Name="SundayOpenCheckBox" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,8,0" />
-            <Grid Grid.Row="7" Grid.Column="2" Margin="0,0,8,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="SundayStartHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="SundayStartMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
-            <Grid Grid.Row="7" Grid.Column="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="SundayEndHourComboBox" Grid.Column="0" Height="28" ItemsSource="{StaticResource HourItems}" SelectedIndex="0" />
-                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" Margin="4,0" />
-                <ComboBox x:Name="SundayEndMinuteComboBox" Grid.Column="2" Height="28" ItemsSource="{StaticResource MinuteItems}" SelectedIndex="0" />
-            </Grid>
+                            <Grid Grid.Column="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <ComboBox Grid.Column="0"
+                                  Height="28"
+                                  ItemsSource="{Binding DataContext.HourItems, RelativeSource={RelativeSource AncestorType=Window}}"
+                                  SelectedItem="{Binding EndHour, Mode=TwoWay}" />
+                                <TextBlock Grid.Column="1"
+                                   Text=":"
+                                   VerticalAlignment="Center"
+                                   Margin="4,0" />
+                                <ComboBox Grid.Column="2"
+                                  Height="28"
+                                  ItemsSource="{Binding DataContext.MinuteItems, RelativeSource={RelativeSource AncestorType=Window}}"
+                                  SelectedItem="{Binding EndMinute, Mode=TwoWay}" />
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Grid>
 
         <Label Grid.Row="3"
