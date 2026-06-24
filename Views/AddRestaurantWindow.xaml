@@ -337,17 +337,31 @@
                Content="喜愛程度"
                VerticalAlignment="Top"
                Margin="0,2,16,0" />
-        <ComboBox x:Name="PreferenceScoreComboBox"
-                  Grid.Row="3"
-                  Grid.Column="1"
-                  Height="28"
-                  SelectedIndex="2" Grid.ColumnSpan="2">
-            <ComboBoxItem Content="1" />
-            <ComboBoxItem Content="2" />
-            <ComboBoxItem Content="3" />
-            <ComboBoxItem Content="4" />
-            <ComboBoxItem Content="5" />
-        </ComboBox>
+        <Grid Grid.Row="3"
+              Grid.Column="1"
+              Grid.ColumnSpan="2"
+              Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Slider x:Name="PreferenceScoreSlider"
+                    Grid.Column="0"
+                    Minimum="1"
+                    Maximum="5"
+                    Value="3"
+                    TickFrequency="1"
+                    IsSnapToTickEnabled="True"
+                    TickPlacement="BottomRight"
+                    VerticalAlignment="Center"
+                    Margin="0,0,16,0" />
+            <TextBlock Grid.Column="1"
+                       Width="24"
+                       Text="{Binding Value, ElementName=PreferenceScoreSlider, StringFormat={}{0:0}}"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center" />
+        </Grid>
 
         <Button x:Name="AddRestaurantButton"
                 Grid.Row="5"
@@ -355,6 +369,7 @@
                 Content="新增"
                 Width="96"
                 Height="32"
-                HorizontalAlignment="Right" />
+                HorizontalAlignment="Right"
+                Click="OnAddNewRestaurantBtnClicked"/>
     </Grid>
 </Window>

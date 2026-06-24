@@ -23,5 +23,18 @@ namespace WhatToEat
         {
             InitializeComponent();
         }
+
+        private void OnAddNewRestaurantBtnClicked(object sender, RoutedEventArgs e)
+        {
+            string name = RestaurantNameTextBox.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                MessageBox.Show("請輸入餐廳名稱");
+                return;
+            }
+
+
+        }
     }
 }
