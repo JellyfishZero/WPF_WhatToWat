@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace WhatToEat.Data
 {
@@ -12,9 +13,20 @@ namespace WhatToEat.Data
         public DbSet<Restaurant> Restaurants => Set<Restaurant>();
         public DbSet<BusinessHour> BusinessHours => Set<BusinessHour>();
 
-        protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(
+            Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder
+        )
         {
-            optionsBuilder.UseSqlite("Data Source=WhatToEat.db");
+            var folder = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "JellyfishZero_WhatToEat"
+            );
+
+            Directory.CreateDirectory(folder);
+
+            var dbPath = Path.Combine(folder, "WhatToEat.db");
+
+            optionsBuilder.UseSqlite($"Data Source={dbPath}");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 
@@ -15,7 +16,7 @@ namespace WhatToEat
 
             // 連接或產生SQLite DB
             using var db = new Data.AppDbContext();
-            db.Database.EnsureCreated();
+            db.Database.Migrate();
         }
     }
 }
