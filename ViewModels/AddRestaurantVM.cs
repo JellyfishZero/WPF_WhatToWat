@@ -66,6 +66,10 @@ namespace WhatToEat.ViewModels
         private int _preferenceScore = 3;
         private bool _hasBusinessHours;
         private string _errorMessage = "";
+        private string _defaultStartHour = "09";
+        private string _defaultStartMinute = "00";
+        private string _defaultEndHour = "21";
+        private string _defaultEndMinute = "00";
 
         public AddRestaurantVM(RestaurantService restaurantService)
         {
@@ -94,6 +98,30 @@ namespace WhatToEat.ViewModels
         {
             get => _errorMessage;
             private set => SetField(ref _errorMessage, value);
+        }
+
+        public string DefaultStartHour
+        {
+            get => _defaultStartHour;
+            set => SetField(ref _defaultStartHour, value);
+        }
+
+        public string DefaultStartMinute
+        {
+            get => _defaultStartMinute;
+            set => SetField(ref _defaultStartMinute, value);
+        }
+
+        public string DefaultEndHour
+        {
+            get => _defaultEndHour;
+            set => SetField(ref _defaultEndHour, value);
+        }
+
+        public string DefaultEndMinute
+        {
+            get => _defaultEndMinute;
+            set => SetField(ref _defaultEndMinute, value);
         }
 
         public AddRestaurantResult AddRestaurant()
@@ -155,6 +183,10 @@ namespace WhatToEat.ViewModels
             RestaurantName = "";
             PreferenceScore = 3;
             HasBusinessHours = false;
+            DefaultStartHour = "09";
+            DefaultStartMinute = "00";
+            DefaultEndHour = "21";
+            DefaultEndMinute = "00";
 
             foreach (var businessHour in BusinessHours)
             {
@@ -163,11 +195,7 @@ namespace WhatToEat.ViewModels
         }
 
         public void ApplyDefaultBusinessHours(
-            bool includeWeekend,
-            string startHour,
-            string startMinute,
-            string endHour,
-            string endMinute
+            bool includeWeekend
         )
         {
             foreach (var businessHour in BusinessHours)
@@ -182,10 +210,10 @@ namespace WhatToEat.ViewModels
                 }
 
                 businessHour.IsOpen = true;
-                businessHour.StartHour = startHour;
-                businessHour.StartMinute = startMinute;
-                businessHour.EndHour = endHour;
-                businessHour.EndMinute = endMinute;
+                businessHour.StartHour = DefaultStartHour;
+                businessHour.StartMinute = DefaultStartMinute;
+                businessHour.EndHour = DefaultEndHour;
+                businessHour.EndMinute = DefaultEndMinute;
             }
         }
     }

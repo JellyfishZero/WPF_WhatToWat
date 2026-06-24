@@ -1,7 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
-using WhatToEat.Helper;
-using WhatToEat.Models;
 using WhatToEat.ViewModels;
 
 namespace WhatToEat
@@ -43,11 +40,6 @@ namespace WhatToEat
         private void ClearForm()
         {
             _addRestaurantVM.Reset();
-
-            DefaultStartHourComboBox.SelectedIndex = 9;
-            DefaultStartMinuteComboBox.SelectedIndex = 0;
-            DefaultEndHourComboBox.SelectedIndex = 21;
-            DefaultEndMinuteComboBox.SelectedIndex = 0;
         }
 
         private void OnApplyWeekdaysBusinessHoursClicked(object sender, RoutedEventArgs e)
@@ -62,13 +54,7 @@ namespace WhatToEat
 
         private void ApplyDefaultBusinessHours(bool includeWeekend)
         {
-            _addRestaurantVM.ApplyDefaultBusinessHours(
-                includeWeekend,
-                (string)DefaultStartHourComboBox.SelectedItem,
-                (string)DefaultStartMinuteComboBox.SelectedItem,
-                (string)DefaultEndHourComboBox.SelectedItem,
-                (string)DefaultEndMinuteComboBox.SelectedItem
-            );
+            _addRestaurantVM.ApplyDefaultBusinessHours(includeWeekend);
         }
     }
 }
