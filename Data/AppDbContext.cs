@@ -10,6 +10,7 @@ namespace WhatToEat.Data
     public class AppDbContext : DbContext
     {
         public DbSet<Restaurant> Restaurants => Set<Restaurant>();
+        public DbSet<BusinessHour> BusinessHours => Set<BusinessHour>();
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
         {
