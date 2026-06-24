@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System.Windows;
+﻿using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WhatToEat
 {
@@ -18,28 +18,28 @@ namespace WhatToEat
 
         private void AddItemClick(object sender, RoutedEventArgs e)
         {
-            var window = _services.GetRequiredService<AddRestaurantWindow>();
-            window.Owner = this;
-            window.Show();
+            ShowWindow<AddRestaurantWindow>();
         }
 
         private void ModifyItemClick(object sender, RoutedEventArgs e)
         {
-            var window = _services.GetRequiredService<ModifyRestaurantWindow>();
-            window.Owner = this;
-            window.Show();
+            ShowWindow<ModifyRestaurantWindow>();
         }
 
         private void QueryItemClick(object sender, RoutedEventArgs e)
         {
-            var window = _services.GetRequiredService<QueryRestaurantWindow>();
-            window.Owner = this;
-            window.Show();
+            ShowWindow<QueryRestaurantWindow>();
         }
 
         private void DeleteItemClick(object sender, RoutedEventArgs e)
         {
-            var window = _services.GetRequiredService<DeleteRestaurantWindow>();
+            ShowWindow<DeleteRestaurantWindow>();
+        }
+
+        private void ShowWindow<TWindow>()
+            where TWindow : Window
+        {
+            var window = _services.GetRequiredService<TWindow>();
             window.Owner = this;
             window.Show();
         }

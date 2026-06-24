@@ -1,5 +1,3 @@
-﻿using System.Configuration;
-using System.Data;
 using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +20,9 @@ namespace WhatToEat
 
             Services = new ServiceCollection()
                 // db
-                .AddTransient<AppDbContext>()
+                .AddDbContextFactory<AppDbContext>(options =>
+                    options.UseSqlite($"Data Source={AppDbContext.GetDatabasePath()}")
+                )
                 // model
                 .AddTransient<RestaurantService>()
                 // view model
@@ -33,16 +33,34 @@ namespace WhatToEat
                 .AddTransient<ModifyRestaurantWindow>()
                 .AddTransient<DeleteRestaurantWindow>()
                 .AddTransient<QueryRestaurantWindow>()
-                .BuildServiceProvider();
+                .BuildServiceProvider(
+                    new ServiceProviderOptions
+                    {
+                        ValidateOnBuild = true,  // 檢查使否忘記註冊
+                        ValidateScopes = true, // 取用範圍檢查
+                    }
+                );
 
-            // 連接或產生SQLite DB
-            using var db = Services.GetRequiredService<AppDbContext>();
+            // Connect to or create the SQLite DB.
+            var dbFactory = Services.GetRequiredService<IDbContextFactory<AppDbContext>>();
+            using var db = dbFactory.CreateDbContext();
             db.Database.Migrate();
 
             var mainWindow = Services.GetRequiredService<MainWindow>();
             Current.MainWindow = mainWindow;
             ShutdownMode = ShutdownMode.OnMainWindowClose;
             mainWindow.Show();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            // 確保DI容器所有需要釋放的東西都會正確釋放
+            if (Services is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+
+            base.OnExit(e);
         }
     }
 }

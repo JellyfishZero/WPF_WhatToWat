@@ -1,30 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WhatToEat.Data;
 
 namespace WhatToEat.Models
 {
     public class RestaurantService
     {
-        private readonly AppDbContext _db;
+        private readonly IDbContextFactory<AppDbContext> _dbFactory;
 
-        public RestaurantService(AppDbContext db)
+        public RestaurantService(IDbContextFactory<AppDbContext> dbFactory)
         {
-            _db = db;
+            _dbFactory = dbFactory;
         }
 
         public bool NameExists(string name)
         {
-            return _db.Restaurants.Any(r => r.Name == name);
+            using var db = _dbFactory.CreateDbContext();
+
+            return db.Restaurants.Any(r => r.Name == name);
         }
 
         public void Add(Restaurant restaurant)
         {
-            _db.Restaurants.Add(restaurant);
-            _db.SaveChanges();
+            using var db = _dbFactory.CreateDbContext();
+
+            db.Restaurants.Add(restaurant);
+            db.SaveChanges();
         }
     }
 }

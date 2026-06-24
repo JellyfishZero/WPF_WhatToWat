@@ -1,32 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using Microsoft.EntityFrameworkCore;
 
 namespace WhatToEat.Data
 {
     public class AppDbContext : DbContext
     {
+        private const string FOLDER_NAME = "JellyfishZero_WhatToEat";
+        private const string DATABASE_NAME = "WhatToEat.db";
+
         public DbSet<Restaurant> Restaurants => Set<Restaurant>();
         public DbSet<BusinessHour> BusinessHours => Set<BusinessHour>();
 
-        protected override void OnConfiguring(
-            Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder
-        )
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options) { }
+
+        public static string GetDatabasePath()
         {
             var folder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "JellyfishZero_WhatToEat"
+                FOLDER_NAME
             );
 
             Directory.CreateDirectory(folder);
 
-            var dbPath = Path.Combine(folder, "WhatToEat.db");
-
-            optionsBuilder.UseSqlite($"Data Source={dbPath}");
+            return Path.Combine(folder, DATABASE_NAME);
         }
     }
 }
