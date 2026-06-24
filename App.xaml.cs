@@ -40,6 +40,8 @@ namespace WhatToEat
             db.Database.Migrate();
 
             var mainWindow = Services.GetRequiredService<MainWindow>();
+            Current.MainWindow = mainWindow;
+            ShutdownMode = ShutdownMode.OnMainWindowClose;
             mainWindow.Show();
         }
     }

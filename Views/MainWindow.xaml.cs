@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
 
 namespace WhatToEat
 {
@@ -7,38 +8,40 @@ namespace WhatToEat
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly AddRestaurantWindow _addWindow;
-        private readonly ModifyRestaurantWindow _modifyWindow;
-        private readonly QueryRestaurantWindow _queryWindow;
-        private readonly DeleteRestaurantWindow _deleteWindow;
+        private readonly IServiceProvider _services;
 
-        public MainWindow(AddRestaurantWindow addWindow, ModifyRestaurantWindow modifyWindow, QueryRestaurantWindow queryWindow, DeleteRestaurantWindow deleteWindow)
+        public MainWindow(IServiceProvider services)
         {
             InitializeComponent();
-            _addWindow = addWindow;
-            _modifyWindow = modifyWindow;
-            _queryWindow = queryWindow;
-            _deleteWindow = deleteWindow;
+            _services = services;
         }
 
         private void AddItemClick(object sender, RoutedEventArgs e)
         {
-            _addWindow.Show();
+            var window = _services.GetRequiredService<AddRestaurantWindow>();
+            window.Owner = this;
+            window.Show();
         }
 
         private void ModifyItemClick(object sender, RoutedEventArgs e)
         {
-            _modifyWindow.Show();
+            var window = _services.GetRequiredService<ModifyRestaurantWindow>();
+            window.Owner = this;
+            window.Show();
         }
 
         private void QueryItemClick(object sender, RoutedEventArgs e)
         {
-            _queryWindow.Show();
+            var window = _services.GetRequiredService<QueryRestaurantWindow>();
+            window.Owner = this;
+            window.Show();
         }
 
         private void DeleteItemClick(object sender, RoutedEventArgs e)
         {
-            _deleteWindow.Show();
+            var window = _services.GetRequiredService<DeleteRestaurantWindow>();
+            window.Owner = this;
+            window.Show();
         }
     }
 }
