@@ -22,20 +22,11 @@ namespace WhatToEat
 
         private void OnAddNewRestaurantBtnClicked(object sender, RoutedEventArgs e)
         {
-            string name = RestaurantNameTextBox.Text.Trim();
-            int preferenceScore = Convert.ToInt32(PreferenceScoreSlider.Value);
-            bool hasBusinessHours = HasBusinessHoursCheckBox.IsChecked == true;
-
-            List<Data.BusinessHour> businessHours = hasBusinessHours
+            List<Data.BusinessHour> businessHours = _addRestaurantVM.HasBusinessHours
                 ? CreateBusinessHours()
                 : [];
 
-            var result = _addRestaurantVM.AddRestaurant(
-                name,
-                preferenceScore,
-                hasBusinessHours,
-                businessHours
-            );
+            var result = _addRestaurantVM.AddRestaurant(businessHours);
 
             switch (result)
             {
@@ -57,9 +48,8 @@ namespace WhatToEat
 
         private void ClearForm()
         {
-            RestaurantNameTextBox.Clear();
-            PreferenceScoreSlider.Value = 3;
-            HasBusinessHoursCheckBox.IsChecked = false;
+            _addRestaurantVM.Reset();
+
             DefaultStartHourComboBox.SelectedIndex = 9;
             DefaultStartMinuteComboBox.SelectedIndex = 0;
             DefaultEndHourComboBox.SelectedIndex = 21;

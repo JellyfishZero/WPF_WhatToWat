@@ -63,6 +63,7 @@
                VerticalAlignment="Top"
                Margin="0,1,16,0" />
         <TextBox x:Name="RestaurantNameTextBox"
+                 Text="{Binding RestaurantName, UpdateSourceTrigger=PropertyChanged}"
                  Grid.Row="0"
                  Grid.Column="1"
                  Height="28"
@@ -74,6 +75,7 @@
                VerticalAlignment="Top"
                Margin="0,0,16,0" />
         <CheckBox x:Name="HasBusinessHoursCheckBox"
+                  IsChecked="{Binding HasBusinessHours, Mode=TwoWay}"
                   Grid.Row="1"
                   Grid.Column="1"
                   Content="需要紀錄營業時間"
@@ -340,10 +342,9 @@
             </Grid.ColumnDefinitions>
 
             <Slider x:Name="PreferenceScoreSlider"
-                    Grid.Column="0"
+                    Value="{Binding PreferenceScore, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Minimum="1"
                     Maximum="5"
-                    Value="3"
                     TickFrequency="1"
                     IsSnapToTickEnabled="True"
                     TickPlacement="BottomRight"
@@ -351,7 +352,7 @@
                     Margin="0,0,16,0" />
             <TextBlock Grid.Column="1"
                        Width="24"
-                       Text="{Binding Value, ElementName=PreferenceScoreSlider, StringFormat={}{0:0}}"
+                       Text="{Binding PreferenceScore}"
                        VerticalAlignment="Center"
                        TextAlignment="Center" />
         </Grid>
