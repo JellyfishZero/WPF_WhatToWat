@@ -37,65 +37,7 @@
 
         <x:Array x:Key="MinuteItems" Type="{x:Type sys:String}">
             <sys:String>00</sys:String>
-            <sys:String>01</sys:String>
-            <sys:String>02</sys:String>
-            <sys:String>03</sys:String>
-            <sys:String>04</sys:String>
-            <sys:String>05</sys:String>
-            <sys:String>06</sys:String>
-            <sys:String>07</sys:String>
-            <sys:String>08</sys:String>
-            <sys:String>09</sys:String>
-            <sys:String>10</sys:String>
-            <sys:String>11</sys:String>
-            <sys:String>12</sys:String>
-            <sys:String>13</sys:String>
-            <sys:String>14</sys:String>
-            <sys:String>15</sys:String>
-            <sys:String>16</sys:String>
-            <sys:String>17</sys:String>
-            <sys:String>18</sys:String>
-            <sys:String>19</sys:String>
-            <sys:String>20</sys:String>
-            <sys:String>21</sys:String>
-            <sys:String>22</sys:String>
-            <sys:String>23</sys:String>
-            <sys:String>24</sys:String>
-            <sys:String>25</sys:String>
-            <sys:String>26</sys:String>
-            <sys:String>27</sys:String>
-            <sys:String>28</sys:String>
-            <sys:String>29</sys:String>
             <sys:String>30</sys:String>
-            <sys:String>31</sys:String>
-            <sys:String>32</sys:String>
-            <sys:String>33</sys:String>
-            <sys:String>34</sys:String>
-            <sys:String>35</sys:String>
-            <sys:String>36</sys:String>
-            <sys:String>37</sys:String>
-            <sys:String>38</sys:String>
-            <sys:String>39</sys:String>
-            <sys:String>40</sys:String>
-            <sys:String>41</sys:String>
-            <sys:String>42</sys:String>
-            <sys:String>43</sys:String>
-            <sys:String>44</sys:String>
-            <sys:String>45</sys:String>
-            <sys:String>46</sys:String>
-            <sys:String>47</sys:String>
-            <sys:String>48</sys:String>
-            <sys:String>49</sys:String>
-            <sys:String>50</sys:String>
-            <sys:String>51</sys:String>
-            <sys:String>52</sys:String>
-            <sys:String>53</sys:String>
-            <sys:String>54</sys:String>
-            <sys:String>55</sys:String>
-            <sys:String>56</sys:String>
-            <sys:String>57</sys:String>
-            <sys:String>58</sys:String>
-            <sys:String>59</sys:String>
         </x:Array>
     </Window.Resources>
 
@@ -134,9 +76,60 @@
         <CheckBox x:Name="HasBusinessHoursCheckBox"
                   Grid.Row="1"
                   Grid.Column="1"
-                  Content="需要紀錄營業時間(如不紀錄，則視為ㄧ週七天全天營業)"
+                  Content="需要紀錄營業時間"
                   VerticalAlignment="Top"
                   Margin="0,5,0,0" Grid.ColumnSpan="2" />
+
+        <StackPanel Grid.Row="1"
+                    Grid.Column="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0,0,0,0"
+                    IsEnabled="{Binding IsChecked, ElementName=HasBusinessHoursCheckBox}">
+            <TextBlock Text="預設"
+                       VerticalAlignment="Center"
+                       Margin="0,0,8,0" />
+            <ComboBox x:Name="DefaultStartHourComboBox"
+                      Width="48"
+                      Height="28"
+                      ItemsSource="{StaticResource HourItems}"
+                      SelectedIndex="9" />
+            <TextBlock Text=":"
+                       VerticalAlignment="Center"
+                       Margin="4,0" />
+            <ComboBox x:Name="DefaultStartMinuteComboBox"
+                      Width="48"
+                      Height="28"
+                      ItemsSource="{StaticResource MinuteItems}"
+                      SelectedIndex="0" />
+            <TextBlock Text="~"
+                       VerticalAlignment="Center"
+                       Margin="8,0" />
+            <ComboBox x:Name="DefaultEndHourComboBox"
+                      Width="48"
+                      Height="28"
+                      ItemsSource="{StaticResource HourItems}"
+                      SelectedIndex="21" />
+            <TextBlock Text=":"
+                       VerticalAlignment="Center"
+                       Margin="4,0" />
+            <ComboBox x:Name="DefaultEndMinuteComboBox"
+                      Width="48"
+                      Height="28"
+                      ItemsSource="{StaticResource MinuteItems}"
+                      SelectedIndex="0" />
+            <Button Content="套用平日"
+                    Width="76"
+                    Height="28"
+                    Margin="12,0,0,0"
+                    Click="OnApplyWeekdaysBusinessHoursClicked" />
+            <Button Content="套用全週"
+                    Width="76"
+                    Height="28"
+                    Margin="8,0,0,0"
+                    Click="OnApplyAllBusinessHoursClicked" />
+        </StackPanel>
 
         <Label Grid.Row="1"
                Grid.Column="0"
