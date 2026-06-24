@@ -7,19 +7,24 @@ using WhatToEat.Data;
 
 namespace WhatToEat.Models
 {
-    class RestaurantService
+    public class RestaurantService
     {
+        private readonly AppDbContext _db;
+
+        public RestaurantService(AppDbContext db)
+        {
+            _db = db;
+        }
+
         public bool NameExists(string name)
         {
-            using var db = new AppDbContext();
-            return db.Restaurants.Any(r => r.Name == name);
+            return _db.Restaurants.Any(r => r.Name == name);
         }
 
         public void Add(Restaurant restaurant)
         {
-            using var db = new AppDbContext();
-            db.Restaurants.Add(restaurant);
-            db.SaveChanges();
+            _db.Restaurants.Add(restaurant);
+            _db.SaveChanges();
         }
     }
 }

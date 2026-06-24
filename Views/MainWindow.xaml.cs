@@ -7,33 +7,38 @@ namespace WhatToEat
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly AddRestaurantWindow _addWindow;
+        private readonly ModifyRestaurantWindow _modifyWindow;
+        private readonly QueryRestaurantWindow _queryWindow;
+        private readonly DeleteRestaurantWindow _deleteWindow;
+
+        public MainWindow(AddRestaurantWindow addWindow, ModifyRestaurantWindow modifyWindow, QueryRestaurantWindow queryWindow, DeleteRestaurantWindow deleteWindow)
         {
             InitializeComponent();
+            _addWindow = addWindow;
+            _modifyWindow = modifyWindow;
+            _queryWindow = queryWindow;
+            _deleteWindow = deleteWindow;
         }
 
         private void AddItemClick(object sender, RoutedEventArgs e)
         {
-            AddRestaurantWindow addWindow = new AddRestaurantWindow();
-            addWindow.Show();
+            _addWindow.Show();
         }
 
         private void ModifyItemClick(object sender, RoutedEventArgs e)
         {
-            ModifyRestaurantWindow modifyWindow = new ModifyRestaurantWindow();
-            modifyWindow.Show();
+            _modifyWindow.Show();
         }
 
         private void QueryItemClick(object sender, RoutedEventArgs e)
         {
-            QueryRestaurantWindow queryWindow = new QueryRestaurantWindow();
-            queryWindow.Show();
+            _queryWindow.Show();
         }
 
         private void DeleteItemClick(object sender, RoutedEventArgs e)
         {
-            DeleteRestaurantWindow deleteWindow = new DeleteRestaurantWindow();
-            deleteWindow.Show();
+            _deleteWindow.Show();
         }
     }
 }

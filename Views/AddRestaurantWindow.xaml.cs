@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using WhatToEat.Helper;
+using WhatToEat.Models;
+using WhatToEat.ViewModels;
 
 namespace WhatToEat
 {
@@ -9,50 +11,48 @@ namespace WhatToEat
     /// </summary>
     public partial class AddRestaurantWindow : Window
     {
-        public AddRestaurantWindow()
+        private readonly AddRestaurantVM _addRestaurantVM;
+
+        public AddRestaurantWindow(AddRestaurantVM addRestaurantVM)
         {
             InitializeComponent();
+            _addRestaurantVM = addRestaurantVM;
+            DataContext = _addRestaurantVM;
         }
 
         private void OnAddNewRestaurantBtnClicked(object sender, RoutedEventArgs e)
         {
             string name = RestaurantNameTextBox.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                MessageBox.Show("請輸入餐廳名稱");
-                return;
-            }
-
             int preferenceScore = Convert.ToInt32(PreferenceScoreSlider.Value);
+            bool hasBusinessHours = HasBusinessHoursCheckBox.IsChecked == true;
 
-            var restaurant = new Data.Restaurant
+            List<Data.BusinessHour> businessHours = hasBusinessHours
+                ? CreateBusinessHours()
+                : [];
+
+            var result = _addRestaurantVM.AddRestaurant(
+                name,
+                preferenceScore,
+                hasBusinessHours,
+                businessHours
+            );
+
+            switch (result)
             {
-                Name = name,
-                PreferenceScore = preferenceScore,
-                HasBusinessHours = HasBusinessHoursCheckBox.IsChecked == true,
-            };
+                case AddRestaurantResult.EmptyName:
+                    MessageBox.Show("請輸入餐廳名稱");
+                    return;
 
-            using var db = new Data.AppDbContext();
+                case AddRestaurantResult.DuplicatedName:
+                    MessageBox.Show("店家名稱已存在");
+                    return;
 
-            bool nameExists = db.Restaurants.Any(r => r.Name == name);
-
-            if (nameExists)
-            {
-                MessageBox.Show("店家名稱已存在");
-                return;
+                case AddRestaurantResult.Success:
+                    MessageBox.Show("餐廳已新增");
+                    ClearForm();
+                    RestaurantNameTextBox.Focus();
+                    return;
             }
-
-            db.Restaurants.Add(restaurant);
-            if (restaurant.HasBusinessHours)
-            {
-                restaurant.BusinessHours.AddRange(CreateBusinessHours());
-            }
-            db.SaveChanges();
-
-            MessageBox.Show("餐廳已新增");
-            ClearForm();
-            RestaurantNameTextBox.Focus();
         }
 
         private void ClearForm()
