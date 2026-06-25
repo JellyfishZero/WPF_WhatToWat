@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using WhatToEat.Commands;
 using WhatToEat.Data;
 using WhatToEat.Helper;
 using WhatToEat.Models;
@@ -14,9 +16,12 @@ namespace WhatToEat.ViewModels
     {
         private readonly RestaurantService _restaurantService;
 
+        public ICommand RefreshCommand { get; }
+
         public QueryRestaurantVM(RestaurantService restaurantService)
         {
             _restaurantService = restaurantService;
+            RefreshCommand = new RelayCommand(LoadRestaurants);
         }
 
         public ObservableCollection<RestaurantQueryItemVM> Restaurants { get; } = [];
@@ -45,6 +50,7 @@ namespace WhatToEat.ViewModels
 
         public void LoadRestaurants()
         {
+            SelectedRestaurant = null;
             Restaurants.Clear();
 
             var restaurants = _restaurantService.GetAll();
