@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WhatToEat.ViewModels
+namespace WhatToEat.ViewModels.Restaurants.Items
 {
     public class RestaurantQueryItemVM
     {

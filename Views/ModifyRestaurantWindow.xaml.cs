@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WhatToEat.ViewModels;
+using WhatToEat.ViewModels.Restaurants;
 
 namespace WhatToEat
 {
@@ -35,7 +35,7 @@ namespace WhatToEat
             ModifyRestaurantCompletedEventArgs e
         )
         {
-            MessageBox.Show(e.Message);
+            MessageBox.Show(this, e.Message);
         }
     }
 }

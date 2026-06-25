@@ -3,8 +3,9 @@ using System.Windows.Input;
 using WhatToEat.Commands;
 using WhatToEat.Data;
 using WhatToEat.Models;
+using WhatToEat.ViewModels.Common;
 
-namespace WhatToEat.ViewModels
+namespace WhatToEat.ViewModels.Restaurants
 {
     public enum DeleteRestaurantResult
     {

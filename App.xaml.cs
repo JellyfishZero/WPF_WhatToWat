@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WhatToEat.Data;
 using WhatToEat.Models;
-using WhatToEat.ViewModels;
+using WhatToEat.ViewModels.Restaurants;
 
 namespace WhatToEat
 {

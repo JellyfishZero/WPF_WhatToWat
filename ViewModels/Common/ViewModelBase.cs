@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WhatToEat.ViewModels
+namespace WhatToEat.ViewModels.Common
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
