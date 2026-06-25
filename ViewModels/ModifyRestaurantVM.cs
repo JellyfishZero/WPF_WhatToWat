@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WhatToEat.Commands;
 using WhatToEat.Data;
+using WhatToEat.Helper;
 using WhatToEat.Models;
 
 namespace WhatToEat.ViewModels
@@ -63,19 +64,13 @@ namespace WhatToEat.ViewModels
 
         public ObservableCollection<Restaurant> Restaurants { get; } =
             new ObservableCollection<Restaurant>();
-        public List<string> HourItems { get; } =
-            Enumerable.Range(0, 24).Select(i => i.ToString("D2")).ToList();
-        public List<string> MinuteItems { get; } = new List<string> { "00", "30" };
+
+        public List<string> HourItems { get; } = RestaurantEditFormHelper.CreateHourItems();
+
+        public List<string> MinuteItems { get; } = RestaurantEditFormHelper.CreateMinuteItems();
+
         public List<BusinessHourInputVM> BusinessHours { get; } =
-        [
-            new(DayOfWeek.Monday, "週一"),
-            new(DayOfWeek.Tuesday, "週二"),
-            new(DayOfWeek.Wednesday, "週三"),
-            new(DayOfWeek.Thursday, "週四"),
-            new(DayOfWeek.Friday, "週五"),
-            new(DayOfWeek.Saturday, "週六"),
-            new(DayOfWeek.Sunday, "週日"),
-        ];
+            RestaurantEditFormHelper.CreateBusinessHours();
 
         private Restaurant? _selectedRestaurant;
         private string _restaurantName = "";
@@ -234,10 +229,7 @@ namespace WhatToEat.ViewModels
 
         private void ResetBusinessHours()
         {
-            foreach (var businessHour in BusinessHours)
-            {
-                businessHour.Reset();
-            }
+            RestaurantEditFormHelper.ResetBusinessHours(BusinessHours);
         }
 
         private void ClearEditorForm()
@@ -254,23 +246,14 @@ namespace WhatToEat.ViewModels
 
         private void ApplyDefaultBusinessHours(bool includeWeekend)
         {
-            foreach (var businessHour in BusinessHours)
-            {
-                bool isWeekend =
-                    businessHour.DayOfWeek == DayOfWeek.Saturday
-                    || businessHour.DayOfWeek == DayOfWeek.Sunday;
-
-                if (!includeWeekend && isWeekend)
-                {
-                    continue;
-                }
-
-                businessHour.IsOpen = true;
-                businessHour.StartHour = DefaultStartHour;
-                businessHour.StartMinute = DefaultStartMinute;
-                businessHour.EndHour = DefaultEndHour;
-                businessHour.EndMinute = DefaultEndMinute;
-            }
+            RestaurantEditFormHelper.ApplyDefaultBusinessHours(
+                BusinessHours,
+                includeWeekend,
+                DefaultStartHour,
+                DefaultStartMinute,
+                DefaultEndHour,
+                DefaultEndMinute
+            );
         }
 
         private void ResetChanges()
@@ -314,17 +297,15 @@ namespace WhatToEat.ViewModels
 
             if (HasBusinessHours)
             {
-                var invalidBusinessHours = BusinessHours
-                    .Where(x => x.IsOpen && !x.IsTimeRangeValid())
-                    .Select(x => x.DayName)
-                    .ToList();
+                var invalidBusinessHours =
+                    RestaurantEditFormHelper.GetInvalidBusinessHourDayNames(BusinessHours);
 
                 if (invalidBusinessHours.Count > 0)
                 {
                     string message =
-                        "以下營業日的開始時間必須早於結束時間："
-                        + Environment.NewLine
-                        + string.Join(Environment.NewLine, invalidBusinessHours);
+                        RestaurantEditFormHelper.CreateInvalidBusinessHoursMessage(
+                            invalidBusinessHours
+                        );
 
                     RaiseCompleted(ModifyRestaurantResult.InvalidBusinessHours, message);
                     return;
