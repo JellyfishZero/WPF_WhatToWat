@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WhatToEat.Data;
 
@@ -26,6 +26,16 @@ namespace WhatToEat.Models
 
             db.Restaurants.Add(restaurant);
             db.SaveChanges();
+        }
+
+        public List<Restaurant> GetAll()
+        {
+            using var db = _dbFactory.CreateDbContext();
+
+            return db.Restaurants
+                .Include(r => r.BusinessHours)
+                .OrderBy(r => r.Id)
+                .ToList();
         }
     }
 }

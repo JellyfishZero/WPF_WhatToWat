@@ -11,17 +11,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WhatToEat.ViewModels;
 
 namespace WhatToEat
 {
-    /// <summary>
-    /// QueryWindow.xaml 的互動邏輯
-    /// </summary>
     public partial class QueryRestaurantWindow : Window
     {
-        public QueryRestaurantWindow()
+        private readonly QueryRestaurantVM _queryRestaurantVM;
+
+        public QueryRestaurantWindow(QueryRestaurantVM queryRestaurantVM)
         {
             InitializeComponent();
+            _queryRestaurantVM = queryRestaurantVM;
+            DataContext = _queryRestaurantVM;
+
+            // 載入資料
+            _queryRestaurantVM.LoadRestaurants();
         }
     }
 }
