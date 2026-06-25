@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WhatToEat.Data;
@@ -27,6 +27,7 @@ namespace WhatToEat
                 .AddTransient<RestaurantService>()
                 // view model
                 .AddTransient<AddRestaurantVM>()
+                .AddTransient<QueryRestaurantVM>()
                 // view
                 .AddTransient<MainWindow>()
                 .AddTransient<AddRestaurantWindow>()

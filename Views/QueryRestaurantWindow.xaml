@@ -5,8 +5,156 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WhatToEat"
         mc:Ignorable="d"
-        Title="QueryWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="查看所有餐廳" Height="550" Width="900" MinHeight="450" MinWidth="760">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="查看所有餐廳"
+                       FontSize="22"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center" />
+
+            <TextBlock Grid.Column="1"
+                       Text="{Binding RestaurantCountText}"
+                       Foreground="Gray"
+                       VerticalAlignment="Center"
+                       Margin="0,0,16,0" />
+
+            <Button Grid.Column="2"
+                    Content="重新整理"
+                    Width="96"
+                    Height="32"
+                    Command="{Binding RefreshCommand}" />
+        </Grid>
+
+        <TextBlock Grid.Row="1"
+                   Text="{Binding StatusMessage}"
+                   Foreground="Gray"
+                   TextWrapping="Wrap"
+                   Margin="0,0,0,8" />
+
+        <DataGrid x:Name="RestaurantDataGrid"
+                  Grid.Row="2"
+                  ItemsSource="{Binding Restaurants}"
+                  SelectedItem="{Binding SelectedRestaurant, Mode=TwoWay}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  RowDetailsVisibilityMode="VisibleWhenSelected"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="Horizontal"
+                  HorizontalGridLinesBrush="#FFE5E5E5"
+                  ScrollViewer.CanContentScroll="False"
+                  RowHeaderWidth="0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id"
+                                    Binding="{Binding Id}"
+                                    Width="70" />
+                <DataGridTextColumn Header="餐廳名稱"
+                                    Binding="{Binding Name}"
+                                    Width="2*" />
+                <DataGridTextColumn Header="喜愛程度"
+                                    Binding="{Binding PreferenceScore}"
+                                    Width="90" />
+                <DataGridTextColumn Header="營業時間設定"
+                                    Binding="{Binding BusinessHoursSettingText}"
+                                    Width="130" />
+                <DataGridTextColumn Header="營業時間摘要"
+                                    Binding="{Binding BusinessHoursSummary}"
+                                    Width="3*" />
+            </DataGrid.Columns>
+
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="#FFE5E5E5"
+                            BorderThickness="0,1,0,0"
+                            Background="#FFF8F8F8"
+                            Padding="16"
+                            Margin="0,4,0,8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="營業時間"
+                                       FontWeight="SemiBold"
+                                       Margin="0,0,0,8" />
+
+                            <TextBlock Grid.Row="1"
+                                       Text="{Binding BusinessHoursNote}"
+                                       Foreground="Gray"
+                                       TextWrapping="Wrap"
+                                       Margin="0,0,0,8" />
+
+                            <DataGrid Grid.Row="2"
+                                      ItemsSource="{Binding BusinessHours}"
+                                      Visibility="{Binding ShowBusinessHoursDetails, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                      AutoGenerateColumns="False"
+                                      CanUserAddRows="False"
+                                      CanUserDeleteRows="False"
+                                      CanUserResizeColumns="False"
+                                      IsReadOnly="True"
+                                      HeadersVisibility="Column"
+                                      GridLinesVisibility="Horizontal"
+                                      HorizontalGridLinesBrush="#FFE5E5E5"
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      RowHeaderWidth="0"
+                                      MaxHeight="220"
+                                      PreviewMouseWheel="OnBusinessHoursDataGridPreviewMouseWheel">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="星期"
+                                                        Binding="{Binding DayName}"
+                                                        SortMemberPath="DaySortOrder"
+                                                        Width="120"
+                                                        MinWidth="120" />
+                                    <DataGridTextColumn Header="狀態"
+                                                        Binding="{Binding OpenStatusText}"
+                                                        Width="100"
+                                                        MinWidth="100" />
+                                    <DataGridTextColumn Header="營業時間"
+                                                        Binding="{Binding TimeRangeText}"
+                                                        Width="220"
+                                                        MinWidth="220" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+
+        <Grid Grid.Row="3" Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="{Binding SelectedRestaurantHint}"
+                       Foreground="Gray"
+                       VerticalAlignment="Center"
+                       TextWrapping="Wrap"
+                       Margin="0,0,16,0" />
+        </Grid>
     </Grid>
 </Window>
