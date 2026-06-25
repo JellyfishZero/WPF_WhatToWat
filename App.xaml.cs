@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WhatToEat.Data;
 using WhatToEat.Models;
+using WhatToEat.ViewModels.MainWindow;
 using WhatToEat.ViewModels.Restaurants;
 
 namespace WhatToEat
@@ -26,6 +27,7 @@ namespace WhatToEat
                 // model
                 .AddTransient<RestaurantService>()
                 // view model
+                .AddTransient<MainVM>()
                 .AddTransient<AddRestaurantVM>()
                 .AddTransient<QueryRestaurantVM>()
                 .AddTransient<DeleteRestaurantVM>()

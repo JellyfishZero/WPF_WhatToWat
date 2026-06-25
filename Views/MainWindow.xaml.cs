@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using WhatToEat.ViewModels.MainWindow;
 
 namespace WhatToEat
 {
@@ -12,11 +13,11 @@ namespace WhatToEat
 
         private readonly Dictionary<Type, Window> _openedWindows = new();
 
-        public MainWindow(IServiceProvider services)
+        public MainWindow(IServiceProvider services, MainVM mainVM)
         {
             InitializeComponent();
             _services = services;
-            UpdateCurrentTimeText();
+            DataContext = mainVM;
         }
 
         private void AddItemClick(object sender, RoutedEventArgs e)
@@ -37,16 +38,6 @@ namespace WhatToEat
         private void DeleteItemClick(object sender, RoutedEventArgs e)
         {
             ShowWindow<DeleteRestaurantWindow>();
-        }
-
-        private void DrawRestaurantClick(object sender, RoutedEventArgs e)
-        {
-            UpdateCurrentTimeText();
-        }
-
-        private void UpdateCurrentTimeText()
-        {
-            CurrentTimeTextBlock.Text = DateTime.Now.ToString("HH:mm");
         }
 
         private void ShowWindow<TWindow>()
