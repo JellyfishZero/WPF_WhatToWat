@@ -41,20 +41,5 @@ namespace WhatToEat
         {
             _addRestaurantVM.Reset();
         }
-
-        private void OnApplyWeekdaysBusinessHoursClicked(object sender, RoutedEventArgs e)
-        {
-            ApplyDefaultBusinessHours(includeWeekend: false);
-        }
-
-        private void OnApplyAllBusinessHoursClicked(object sender, RoutedEventArgs e)
-        {
-            ApplyDefaultBusinessHours(includeWeekend: true);
-        }
-
-        private void ApplyDefaultBusinessHours(bool includeWeekend)
-        {
-            _addRestaurantVM.ApplyDefaultBusinessHours(includeWeekend);
-        }
     }
 }

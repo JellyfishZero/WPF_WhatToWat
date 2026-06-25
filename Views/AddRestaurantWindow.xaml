@@ -97,12 +97,12 @@
                     Width="76"
                     Height="28"
                     Margin="12,0,0,0"
-                    Click="OnApplyWeekdaysBusinessHoursClicked" />
+                    Command="{Binding ApplyWeekdaysBusinessHoursCommand}" />
             <Button Content="套用全週"
                     Width="76"
                     Height="28"
                     Margin="8,0,0,0"
-                    Click="OnApplyAllBusinessHoursClicked" />
+                    Command="{Binding ApplyAllBusinessHoursCommand}" />
         </StackPanel>
 
         <Label Grid.Row="2"

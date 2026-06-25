@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using WhatToEat.Commands;
 using WhatToEat.Data;
 using WhatToEat.Models;
 
@@ -20,6 +22,9 @@ namespace WhatToEat.ViewModels
 
     public class AddRestaurantVM : ViewModelBase
     {
+        public ICommand ApplyWeekdaysBusinessHoursCommand { get; }
+        public ICommand ApplyAllBusinessHoursCommand { get; }
+
         public List<string> HourItems { get; } =
         [
             "00",
@@ -74,6 +79,9 @@ namespace WhatToEat.ViewModels
         public AddRestaurantVM(RestaurantService restaurantService)
         {
             _restaurantService = restaurantService;
+
+            ApplyWeekdaysBusinessHoursCommand = new RelayCommand(() => ApplyDefaultBusinessHours(false));
+            ApplyAllBusinessHoursCommand = new RelayCommand(() => ApplyDefaultBusinessHours(true));
         }
 
         public string RestaurantName
