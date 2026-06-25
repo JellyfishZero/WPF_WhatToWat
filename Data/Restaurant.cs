@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace WhatToEat.Data
 {
     /// <summary>
@@ -47,3 +42,4 @@ namespace WhatToEat.Data
         public TimeSpan? CloseTime { get; set; }
     }
 }
+

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace WhatToEat.ViewModels.Restaurants.Items
 {
@@ -18,3 +13,4 @@ namespace WhatToEat.ViewModels.Restaurants.Items
         public ObservableCollection<BusinessHourQueryItemVM> BusinessHours { get; } = [];
     }
 }
+
