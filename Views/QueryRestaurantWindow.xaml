@@ -66,9 +66,6 @@
                   ScrollViewer.CanContentScroll="False"
                   RowHeaderWidth="0">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id"
-                                    Binding="{Binding Id}"
-                                    Width="70" />
                 <DataGridTextColumn Header="餐廳名稱"
                                     Binding="{Binding Name}"
                                     Width="2*" />
