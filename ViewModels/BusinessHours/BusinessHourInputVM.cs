@@ -6,8 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using WhatToEat.Data;
+using WhatToEat.ViewModels.Common;
 
-namespace WhatToEat.ViewModels
+namespace WhatToEat.ViewModels.BusinessHours
 {
     public class BusinessHourInputVM : ViewModelBase
     {

@@ -9,8 +9,10 @@ using WhatToEat.Commands;
 using WhatToEat.Data;
 using WhatToEat.Helper;
 using WhatToEat.Models;
+using WhatToEat.ViewModels.Common;
+using WhatToEat.ViewModels.Restaurants.Items;
 
-namespace WhatToEat.ViewModels
+namespace WhatToEat.ViewModels.Restaurants
 {
     public class QueryRestaurantVM : ViewModelBase
     {

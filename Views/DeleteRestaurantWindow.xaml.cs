@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using WhatToEat.ViewModels;
+using WhatToEat.ViewModels.Restaurants;
 
 namespace WhatToEat
 {

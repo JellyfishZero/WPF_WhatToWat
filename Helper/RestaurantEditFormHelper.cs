@@ -1,4 +1,4 @@
-﻿using WhatToEat.ViewModels;
+﻿using WhatToEat.ViewModels.BusinessHours;
 
 namespace WhatToEat.Helper
 {

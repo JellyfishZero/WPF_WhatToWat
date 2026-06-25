@@ -10,8 +10,10 @@ using WhatToEat.Commands;
 using WhatToEat.Data;
 using WhatToEat.Helper;
 using WhatToEat.Models;
+using WhatToEat.ViewModels.BusinessHours;
+using WhatToEat.ViewModels.Common;
 
-namespace WhatToEat.ViewModels
+namespace WhatToEat.ViewModels.Restaurants
 {
     public enum AddRestaurantResult
     {
