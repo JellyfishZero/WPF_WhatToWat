@@ -5,8 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WhatToEat"
         mc:Ignorable="d"
-        Title="DeleteWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="刪除餐廳" Height="280" Width="520" ResizeMode="NoResize">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="刪除餐廳"
+                   FontSize="22"
+                   FontWeight="SemiBold"
+                   Margin="0,0,0,8" />
+
+        <TextBlock Grid.Row="1"
+                   Text="請選擇要刪除的餐廳。若要清空全部資料，請使用左下角的刪除全部。"
+                   Foreground="Gray"
+                   TextWrapping="Wrap"
+                   Margin="0,0,0,20" />
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0"
+                   Content="餐廳名稱"
+                   VerticalAlignment="Top"
+                   Margin="0,1,16,0" />
+            <ComboBox x:Name="RestaurantComboBox"
+                      Grid.Column="1"
+                      Height="28"
+                      ItemsSource="{Binding Restaurants}"
+                      SelectedItem="{Binding SelectedRestaurant, Mode=TwoWay}"
+                      DisplayMemberPath="Name" />
+        </Grid>
+
+        <TextBlock Grid.Row="3"
+                   Text="{Binding StatusMessage}"
+                   Foreground="Gray"
+                   TextWrapping="Wrap"
+                   Margin="0,12,0,0" />
+
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="DeleteAllRestaurantsButton"
+                    Grid.Column="0"
+                    Content="刪除全部"
+                    Width="96"
+                    Height="32"
+                    HorizontalAlignment="Left"
+                    Command="{Binding DeleteAllRestaurantsCommand}" />
+
+            <Button x:Name="DeleteRestaurantButton"
+                    Grid.Column="1"
+                    Content="刪除"
+                    Width="96"
+                    Height="32"
+                    HorizontalAlignment="Right"
+                    Command="{Binding DeleteSelectedRestaurantCommand}" />
+        </Grid>
     </Grid>
 </Window>

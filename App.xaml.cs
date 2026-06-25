@@ -28,6 +28,7 @@ namespace WhatToEat
                 // view model
                 .AddTransient<AddRestaurantVM>()
                 .AddTransient<QueryRestaurantVM>()
+                .AddTransient<DeleteRestaurantVM>()
                 // view
                 .AddTransient<MainWindow>()
                 .AddTransient<AddRestaurantWindow>()
