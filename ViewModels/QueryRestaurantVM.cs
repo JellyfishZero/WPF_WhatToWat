@@ -68,7 +68,6 @@ namespace WhatToEat.ViewModels
         {
             var item = new RestaurantQueryItemVM
             {
-                Id = restaurant.Id,
                 Name = restaurant.Name,
                 PreferenceScore = restaurant.PreferenceScore,
                 BusinessHoursSettingText = restaurant.HasBusinessHours ? "有設定" : "每日全天營業",

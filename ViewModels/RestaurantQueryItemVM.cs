@@ -9,7 +9,6 @@ namespace WhatToEat.ViewModels
 {
     public class RestaurantQueryItemVM
     {
-        public int Id { get; set; }
         public string Name { get; set; } = "";
         public int PreferenceScore { get; set; }
         public string BusinessHoursSettingText { get; set; } = "";
