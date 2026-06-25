@@ -88,6 +88,7 @@ namespace WhatToEat.ViewModels
                     item.BusinessHours.Add(
                         new BusinessHourQueryItemVM
                         {
+                            DaySortOrder = (int)businessHour.DayOfWeek,
                             DayName = TimeHelper.ToDayName(businessHour.DayOfWeek),
                             OpenStatusText = businessHour.IsOpen ? "營業" : "公休",
                             TimeRangeText = businessHour.IsOpen
