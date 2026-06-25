@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using WhatToEat.ViewModels.MainWindow;
 
 namespace WhatToEat
 {
@@ -12,10 +13,11 @@ namespace WhatToEat
 
         private readonly Dictionary<Type, Window> _openedWindows = new();
 
-        public MainWindow(IServiceProvider services)
+        public MainWindow(IServiceProvider services, MainVM mainVM)
         {
             InitializeComponent();
             _services = services;
+            DataContext = mainVM;
         }
 
         private void AddItemClick(object sender, RoutedEventArgs e)

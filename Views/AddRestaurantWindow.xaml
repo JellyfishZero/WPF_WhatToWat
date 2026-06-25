@@ -68,6 +68,11 @@
                        FontSize="12"
                        TextWrapping="Wrap"
                        Margin="22,4,0,0" />
+            <TextBlock Text="結束時間早於開始時間時，視為跨日營業，例如 22:00 ~ 02:00。"
+                        Foreground="Gray"
+                        FontSize="12"
+                        TextWrapping="Wrap"
+                        Margin="22,4,0,0" />
         </StackPanel>
 
         <StackPanel Grid.Row="3"
