@@ -35,7 +35,7 @@ namespace WhatToEat
             ModifyRestaurantCompletedEventArgs e
         )
         {
-            MessageBox.Show(e.Message);
+            MessageBox.Show(this, e.Message);
         }
     }
 }

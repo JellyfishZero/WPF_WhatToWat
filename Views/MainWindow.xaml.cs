@@ -60,6 +60,19 @@ namespace WhatToEat
             window.Closed += (_, _) =>
             {
                 _openedWindows.Remove(windowType);
+
+                if (!IsVisible)
+                {
+                    return;
+                }
+
+                if (WindowState == WindowState.Minimized)
+                {
+                    WindowState = WindowState.Normal;
+                }
+
+                Activate();
+                Focus();
             };
 
             _openedWindows[windowType] = window;

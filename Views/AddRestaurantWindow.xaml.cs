@@ -20,7 +20,7 @@ namespace WhatToEat
 
         private void OnAddRestaurantCompleted(object? sender, AddRestaurantCompletedEventArgs e)
         {
-            MessageBox.Show(e.Message);
+            MessageBox.Show(this, e.Message);
 
             if (e.Result == AddRestaurantResult.Success)
             {

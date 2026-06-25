@@ -26,6 +26,7 @@ namespace WhatToEat
         )
         {
             var result = MessageBox.Show(
+                this,
                 e.Message,
                 e.IsDeleteAll ? "確認刪除全部" : "確認刪除",
                 MessageBoxButton.YesNo,
@@ -40,7 +41,7 @@ namespace WhatToEat
             DeleteRestaurantCompletedEventArgs e
         )
         {
-            MessageBox.Show(e.Message);
+            MessageBox.Show(this, e.Message);
         }
     }
 }
