@@ -95,7 +95,10 @@ namespace WhatToEat.ViewModels.MainWindow
 
             // 先檢查今天設定的營業時間是否包含現在。
             // 同日營業例如 10:00 ~ 21:00；跨日營業例如 22:00 ~ 02:00 的晚間時段。
-            if (todayBusinessHour is not null && IsBusinessHourOpenAt(todayBusinessHour, currentTime))
+            if (
+                todayBusinessHour is not null
+                && IsBusinessHourOpenAt(todayBusinessHour, currentTime)
+            )
             {
                 return true;
             }
@@ -108,8 +111,7 @@ namespace WhatToEat.ViewModels.MainWindow
             // 再檢查昨天是否有跨日營業延伸到今天凌晨。
             // 例如週一 22:00 ~ 02:00，週二 01:00 仍應算作營業中。
             return yesterdayBusinessHour is not null
-                && yesterdayBusinessHour.OpenTime > yesterdayBusinessHour.CloseTime
-                && IsBusinessHourOpenAt(yesterdayBusinessHour, currentTime);
+                && IsPreviousDayOvernightBusinessHourOpenAt(yesterdayBusinessHour, currentTime);
         }
 
         private static bool IsBusinessHourOpenAt(BusinessHour businessHour, TimeSpan currentTime)
@@ -135,6 +137,25 @@ namespace WhatToEat.ViewModels.MainWindow
 
             // 跨日區間：現在時間在開始時間之後，或在隔天結束時間之前，都算營業中。
             return currentTime >= openTime || currentTime < closeTime;
+        }
+
+        private static bool IsPreviousDayOvernightBusinessHourOpenAt(
+            BusinessHour businessHour,
+            TimeSpan currentTime
+        )
+        {
+            if (!businessHour.IsOpen)
+            {
+                return false;
+            }
+
+            if (businessHour.OpenTime is null || businessHour.CloseTime is null)
+            {
+                return false;
+            }
+
+            return businessHour.OpenTime > businessHour.CloseTime
+                && currentTime < businessHour.CloseTime.Value;
         }
 
         private static DayOfWeek GetPreviousDay(DayOfWeek dayOfWeek)
