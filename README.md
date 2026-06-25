@@ -42,12 +42,19 @@
 
 ## 專案架構
 WhatToEat
+
 ├── Commands        # WPF ICommand 實作
+
 ├── Data            # EF Core DbContext 與資料實體
+
 ├── Helper          # 表單與營業時間輔助邏輯
+
 ├── Models          # 餐廳資料操作服務
+
 ├── ViewModels      # MVVM 狀態與操作邏輯
+
 ├── Views           # WPF 視窗與 XAML 介面
+
 └── Migrations      # EF Core 資料庫遷移紀錄
 
 ## 開發環境
