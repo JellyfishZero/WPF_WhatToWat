@@ -68,7 +68,7 @@ namespace WhatToEat.ViewModels.BusinessHours
 
         public bool IsTimeRangeValid()
         {
-            return GetStartTime() < GetEndTime();
+            return GetStartTime() != GetEndTime();
         }
 
         public BusinessHour ToBusinessHour()

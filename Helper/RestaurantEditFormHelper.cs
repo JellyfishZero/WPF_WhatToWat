@@ -40,7 +40,7 @@ namespace WhatToEat.Helper
 
         public static string CreateInvalidBusinessHoursMessage(IEnumerable<string> dayNames)
         {
-            return "以下營業日的開始時間必須早於結束時間："
+            return "以下營業日的開始時間不可等於結束時間："
                 + Environment.NewLine
                 + string.Join(Environment.NewLine, dayNames);
         }

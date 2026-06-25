@@ -87,11 +87,34 @@ namespace WhatToEat.ViewModels.MainWindow
                 return true;
             }
 
-            var businessHour = restaurant.BusinessHours.FirstOrDefault(x =>
+            var currentTime = dateTime.TimeOfDay;
+
+            var todayBusinessHour = restaurant.BusinessHours.FirstOrDefault(x =>
                 x.DayOfWeek == dateTime.DayOfWeek
             );
 
-            if (businessHour is null || !businessHour.IsOpen)
+            // 先檢查今天設定的營業時間是否包含現在。
+            // 同日營業例如 10:00 ~ 21:00；跨日營業例如 22:00 ~ 02:00 的晚間時段。
+            if (todayBusinessHour is not null && IsBusinessHourOpenAt(todayBusinessHour, currentTime))
+            {
+                return true;
+            }
+
+            var yesterday = GetPreviousDay(dateTime.DayOfWeek);
+            var yesterdayBusinessHour = restaurant.BusinessHours.FirstOrDefault(x =>
+                x.DayOfWeek == yesterday
+            );
+
+            // 再檢查昨天是否有跨日營業延伸到今天凌晨。
+            // 例如週一 22:00 ~ 02:00，週二 01:00 仍應算作營業中。
+            return yesterdayBusinessHour is not null
+                && yesterdayBusinessHour.OpenTime > yesterdayBusinessHour.CloseTime
+                && IsBusinessHourOpenAt(yesterdayBusinessHour, currentTime);
+        }
+
+        private static bool IsBusinessHourOpenAt(BusinessHour businessHour, TimeSpan currentTime)
+        {
+            if (!businessHour.IsOpen)
             {
                 return false;
             }
@@ -101,9 +124,22 @@ namespace WhatToEat.ViewModels.MainWindow
                 return false;
             }
 
-            var currentTime = dateTime.TimeOfDay;
+            var openTime = businessHour.OpenTime.Value;
+            var closeTime = businessHour.CloseTime.Value;
 
-            return businessHour.OpenTime <= currentTime && currentTime <= businessHour.CloseTime;
+            if (openTime < closeTime)
+            {
+                // 同日區間：現在時間必須被開始與結束時間夾住。
+                return openTime <= currentTime && currentTime < closeTime;
+            }
+
+            // 跨日區間：現在時間在開始時間之後，或在隔天結束時間之前，都算營業中。
+            return currentTime >= openTime || currentTime < closeTime;
+        }
+
+        private static DayOfWeek GetPreviousDay(DayOfWeek dayOfWeek)
+        {
+            return dayOfWeek == DayOfWeek.Sunday ? DayOfWeek.Saturday : dayOfWeek - 1;
         }
 
         private static Restaurant DrawByPreference(List<Restaurant> restaurants)
