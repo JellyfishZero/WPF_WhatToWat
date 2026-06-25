@@ -243,6 +243,6 @@
                 Width="96"
                 Height="32"
                 HorizontalAlignment="Right"
-                Click="OnAddNewRestaurantBtnClicked"/>
+                Command="{Binding AddRestaurantCommand}"/>
     </Grid>
 </Window>
