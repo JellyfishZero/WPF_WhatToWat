@@ -29,6 +29,7 @@ namespace WhatToEat
                 .AddTransient<AddRestaurantVM>()
                 .AddTransient<QueryRestaurantVM>()
                 .AddTransient<DeleteRestaurantVM>()
+                .AddTransient<ModifyRestaurantVM>()
                 // view
                 .AddTransient<MainWindow>()
                 .AddTransient<AddRestaurantWindow>()
@@ -48,6 +49,7 @@ namespace WhatToEat
             using var db = dbFactory.CreateDbContext();
             db.Database.Migrate();
 
+            // 開啟主要視窗
             var mainWindow = Services.GetRequiredService<MainWindow>();
             Current.MainWindow = mainWindow;
             ShutdownMode = ShutdownMode.OnMainWindowClose;

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WhatToEat.ViewModels;
 
 namespace WhatToEat
 {
@@ -19,9 +20,14 @@ namespace WhatToEat
     /// </summary>
     public partial class ModifyRestaurantWindow : Window
     {
-        public ModifyRestaurantWindow()
+        private readonly ModifyRestaurantVM _modifyRestaurantVM;
+
+        public ModifyRestaurantWindow(ModifyRestaurantVM modifyRestaurantVM)
         {
             InitializeComponent();
+            _modifyRestaurantVM = modifyRestaurantVM;
+            DataContext = _modifyRestaurantVM;
+
         }
     }
 }
