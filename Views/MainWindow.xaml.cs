@@ -16,6 +16,7 @@ namespace WhatToEat
         {
             InitializeComponent();
             _services = services;
+            UpdateCurrentTimeText();
         }
 
         private void AddItemClick(object sender, RoutedEventArgs e)
@@ -36,6 +37,16 @@ namespace WhatToEat
         private void DeleteItemClick(object sender, RoutedEventArgs e)
         {
             ShowWindow<DeleteRestaurantWindow>();
+        }
+
+        private void DrawRestaurantClick(object sender, RoutedEventArgs e)
+        {
+            UpdateCurrentTimeText();
+        }
+
+        private void UpdateCurrentTimeText()
+        {
+            CurrentTimeTextBlock.Text = DateTime.Now.ToString("HH:mm");
         }
 
         private void ShowWindow<TWindow>()
