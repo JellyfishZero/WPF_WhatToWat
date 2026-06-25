@@ -15,46 +15,23 @@ namespace WhatToEat
             InitializeComponent();
             _addRestaurantVM = addRestaurantVM;
             DataContext = _addRestaurantVM;
+            _addRestaurantVM.AddRestaurantCompleted += OnAddRestaurantCompleted;
         }
 
-        private void OnAddNewRestaurantBtnClicked(object sender, RoutedEventArgs e)
+        private void OnAddRestaurantCompleted(object? sender, AddRestaurantCompletedEventArgs e)
         {
-            var result = _addRestaurantVM.AddRestaurant();
+            MessageBox.Show(e.Message);
 
-            switch (result)
+            if (e.Result == AddRestaurantResult.Success)
             {
-                case AddRestaurantResult.EmptyName:
-                case AddRestaurantResult.DuplicatedName:
-                case AddRestaurantResult.InvalidBusinessHours:
-                    MessageBox.Show(_addRestaurantVM.ErrorMessage);
-                    return;
-
-                case AddRestaurantResult.Success:
-                    MessageBox.Show("餐廳已新增");
-                    ClearForm();
-                    RestaurantNameTextBox.Focus();
-                    return;
+                ClearForm();
+                RestaurantNameTextBox.Focus();
             }
         }
 
         private void ClearForm()
         {
             _addRestaurantVM.Reset();
-        }
-
-        private void OnApplyWeekdaysBusinessHoursClicked(object sender, RoutedEventArgs e)
-        {
-            ApplyDefaultBusinessHours(includeWeekend: false);
-        }
-
-        private void OnApplyAllBusinessHoursClicked(object sender, RoutedEventArgs e)
-        {
-            ApplyDefaultBusinessHours(includeWeekend: true);
-        }
-
-        private void ApplyDefaultBusinessHours(bool includeWeekend)
-        {
-            _addRestaurantVM.ApplyDefaultBusinessHours(includeWeekend);
         }
     }
 }
