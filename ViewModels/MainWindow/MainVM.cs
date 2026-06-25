@@ -135,8 +135,8 @@ namespace WhatToEat.ViewModels.MainWindow
                 return openTime <= currentTime && currentTime < closeTime;
             }
 
-            // 跨日區間：現在時間在開始時間之後，或在隔天結束時間之前，都算營業中。
-            return currentTime >= openTime || currentTime < closeTime;
+            // 跨日區間：今天只負責開始時間到午夜，隔天凌晨由昨天的營業時間判斷。
+            return currentTime >= openTime;
         }
 
         private static bool IsPreviousDayOvernightBusinessHourOpenAt(
