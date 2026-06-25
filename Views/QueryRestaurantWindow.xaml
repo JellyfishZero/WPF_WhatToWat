@@ -49,7 +49,8 @@
                    TextWrapping="Wrap"
                    Margin="0,0,0,8" />
 
-        <DataGrid Grid.Row="2"
+        <DataGrid x:Name="RestaurantDataGrid"
+                  Grid.Row="2"
                   ItemsSource="{Binding Restaurants}"
                   SelectedItem="{Binding SelectedRestaurant, Mode=TwoWay}"
                   AutoGenerateColumns="False"
@@ -62,6 +63,7 @@
                   HeadersVisibility="Column"
                   GridLinesVisibility="Horizontal"
                   HorizontalGridLinesBrush="#FFE5E5E5"
+                  ScrollViewer.CanContentScroll="False"
                   RowHeaderWidth="0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id"
@@ -118,7 +120,8 @@
                                       HorizontalGridLinesBrush="#FFE5E5E5"
                                       HorizontalScrollBarVisibility="Disabled"
                                       RowHeaderWidth="0"
-                                      MaxHeight="220">
+                                      MaxHeight="220"
+                                      PreviewMouseWheel="OnBusinessHoursDataGridPreviewMouseWheel">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="星期"
                                                         Binding="{Binding DayName}"
