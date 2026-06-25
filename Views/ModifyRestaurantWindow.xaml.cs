@@ -27,7 +27,6 @@ namespace WhatToEat
             InitializeComponent();
             _modifyRestaurantVM = modifyRestaurantVM;
             DataContext = _modifyRestaurantVM;
-
         }
     }
 }
