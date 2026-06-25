@@ -11,6 +11,29 @@ using WhatToEat.Models;
 
 namespace WhatToEat.ViewModels
 {
+    public enum ModifyRestaurantResult
+    {
+        Success,
+        Reset,
+        EmptySelection,
+        EmptyName,
+        DuplicatedName,
+        InvalidBusinessHours,
+        NotFound,
+    }
+
+    public class ModifyRestaurantCompletedEventArgs : EventArgs
+    {
+        public ModifyRestaurantCompletedEventArgs(ModifyRestaurantResult result, string message)
+        {
+            Result = result;
+            Message = message;
+        }
+
+        public ModifyRestaurantResult Result { get; }
+        public string Message { get; }
+    }
+
     public class ModifyRestaurantVM : ViewModelBase
     {
         private readonly RestaurantService _restaurantService;
@@ -20,6 +43,8 @@ namespace WhatToEat.ViewModels
         public ICommand ApplyAllBusinessHoursCommand { get; }
         public ICommand ResetChangesCommand { get; }
         public ICommand UpdateRestaurantCommand { get; }
+
+        public event EventHandler<ModifyRestaurantCompletedEventArgs>? ModifyRestaurantCompleted;
 
         public ModifyRestaurantVM(RestaurantService restaurantService)
         {
@@ -72,6 +97,7 @@ namespace WhatToEat.ViewModels
                 if (SetField(ref _selectedRestaurant, value))
                 {
                     IsEditorEnabled = false;
+                    ClearEditorForm();
                 }
             }
         }
@@ -152,7 +178,8 @@ namespace WhatToEat.ViewModels
             if (SelectedRestaurant == null)
             {
                 IsEditorEnabled = false;
-                StatusMessage = "請先選擇要修改的餐廳";
+                ClearEditorForm();
+                RaiseCompleted(ModifyRestaurantResult.EmptySelection, "請先選擇要修改的餐廳");
                 return;
             }
 
@@ -213,6 +240,18 @@ namespace WhatToEat.ViewModels
             }
         }
 
+        private void ClearEditorForm()
+        {
+            RestaurantName = "";
+            PreferenceScore = 3;
+            HasBusinessHours = false;
+            DefaultStartHour = "09";
+            DefaultStartMinute = "00";
+            DefaultEndHour = "21";
+            DefaultEndMinute = "00";
+            ResetBusinessHours();
+        }
+
         private void ApplyDefaultBusinessHours(bool includeWeekend)
         {
             foreach (var businessHour in BusinessHours)
@@ -238,12 +277,15 @@ namespace WhatToEat.ViewModels
         {
             if (SelectedRestaurant == null)
             {
-                StatusMessage = "請先選擇要復原的餐廳";
+                RaiseCompleted(ModifyRestaurantResult.EmptySelection, "請先選擇要復原的餐廳");
                 return;
             }
 
             LoadSelectedRestaurant();
-            StatusMessage = $"已復原「{SelectedRestaurant.Name}」的修改";
+            RaiseCompleted(
+                ModifyRestaurantResult.Reset,
+                $"已復原「{SelectedRestaurant.Name}」的修改"
+            );
         }
 
         private void UpdateRestaurant()
@@ -251,7 +293,8 @@ namespace WhatToEat.ViewModels
             if (SelectedRestaurant == null)
             {
                 IsEditorEnabled = false;
-                StatusMessage = "請先選擇要修改的餐廳";
+                ClearEditorForm();
+                RaiseCompleted(ModifyRestaurantResult.EmptySelection, "請先選擇要修改的餐廳");
                 return;
             }
 
@@ -259,13 +302,13 @@ namespace WhatToEat.ViewModels
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                StatusMessage = "請輸入餐廳名稱";
+                RaiseCompleted(ModifyRestaurantResult.EmptyName, "請輸入餐廳名稱");
                 return;
             }
 
             if (_restaurantService.NameExistsExceptId(name, SelectedRestaurant.Id))
             {
-                StatusMessage = "店家名稱已存在";
+                RaiseCompleted(ModifyRestaurantResult.DuplicatedName, "店家名稱已存在");
                 return;
             }
 
@@ -278,11 +321,12 @@ namespace WhatToEat.ViewModels
 
                 if (invalidBusinessHours.Count > 0)
                 {
-                    StatusMessage =
+                    string message =
                         "以下營業日的開始時間必須早於結束時間："
                         + Environment.NewLine
                         + string.Join(Environment.NewLine, invalidBusinessHours);
 
+                    RaiseCompleted(ModifyRestaurantResult.InvalidBusinessHours, message);
                     return;
                 }
             }
@@ -303,7 +347,7 @@ namespace WhatToEat.ViewModels
             {
                 IsEditorEnabled = false;
                 LoadRestaurants();
-                StatusMessage = "找不到要修改的餐廳，請重新載入資料";
+                RaiseCompleted(ModifyRestaurantResult.NotFound, "找不到要修改的餐廳，請重新載入資料");
                 return;
             }
 
@@ -316,7 +360,15 @@ namespace WhatToEat.ViewModels
                 LoadSelectedRestaurant();
             }
 
-            StatusMessage = "餐廳已修改";
+            RaiseCompleted(ModifyRestaurantResult.Success, "餐廳已修改");
+        }
+
+        private void RaiseCompleted(ModifyRestaurantResult result, string message)
+        {
+            ModifyRestaurantCompleted?.Invoke(
+                this,
+                new ModifyRestaurantCompletedEventArgs(result, message)
+            );
         }
     }
 }

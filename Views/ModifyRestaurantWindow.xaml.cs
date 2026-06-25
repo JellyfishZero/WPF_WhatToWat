@@ -27,6 +27,15 @@ namespace WhatToEat
             InitializeComponent();
             _modifyRestaurantVM = modifyRestaurantVM;
             DataContext = _modifyRestaurantVM;
+            _modifyRestaurantVM.ModifyRestaurantCompleted += OnModifyRestaurantCompleted;
+        }
+
+        private void OnModifyRestaurantCompleted(
+            object? sender,
+            ModifyRestaurantCompletedEventArgs e
+        )
+        {
+            MessageBox.Show(e.Message);
         }
     }
 }
