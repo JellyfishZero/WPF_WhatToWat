@@ -37,5 +37,30 @@ namespace WhatToEat.Models
                 .OrderBy(r => r.Id)
                 .ToList();
         }
+
+        public void Delete(Restaurant restaurant)
+        {
+            using var db = _dbFactory.CreateDbContext();
+
+            var target = db.Restaurants.FirstOrDefault(r => r.Id == restaurant.Id);
+
+            if (target == null)
+            {
+                return;
+            }
+
+            db.Restaurants.Remove(target);
+            db.SaveChanges();
+        }
+
+        public void DeleteAll()
+        {
+            using var db = _dbFactory.CreateDbContext();
+
+            var restaurants = db.Restaurants.ToList();
+
+            db.Restaurants.RemoveRange(restaurants);
+            db.SaveChanges();
+        }
     }
 }

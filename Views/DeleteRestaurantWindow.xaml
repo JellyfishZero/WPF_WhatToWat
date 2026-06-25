@@ -63,7 +63,7 @@
                     Width="96"
                     Height="32"
                     HorizontalAlignment="Left"
-                    Click="OnDeleteAllRestaurantsButtonClick" />
+                    Command="{Binding DeleteAllRestaurantsCommand}" />
 
             <Button x:Name="DeleteRestaurantButton"
                     Grid.Column="1"
@@ -71,7 +71,7 @@
                     Width="96"
                     Height="32"
                     HorizontalAlignment="Right"
-                    Click="OnDeleteRestaurantButtonClick" />
+                    Command="{Binding DeleteSelectedRestaurantCommand}" />
         </Grid>
     </Grid>
 </Window>
