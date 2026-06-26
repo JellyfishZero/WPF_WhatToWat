@@ -8,7 +8,7 @@
 ### 使用技術
 
 - **.NET 8 WPF**：建立 Windows 桌面應用程式介面。
-- **MVVM 架構**：以 ViewModel 管理畫面狀態與操作流程，降低 UI 與商業邏輯耦合。
+- **MVVM 架構**：以 ViewModel 管理畫面狀態與操作流程，降低 UI 與業務邏輯耦合。
 - **Entity Framework Core**：負責餐廳資料的存取與資料庫操作。
 - **SQLite**：作為本機資料庫，餐廳資料會儲存在使用者電腦中。
 - **Dependency Injection**：透過 `Microsoft.Extensions.DependencyInjection` 管理 ViewModel、Service 與 DbContext 的建立。
