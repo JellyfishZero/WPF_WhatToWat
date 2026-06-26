@@ -64,4 +64,22 @@ WhatToEat
 
 ## 畫面預覽
 
-> TODO: 放上主畫面、新增餐廳與修改餐廳畫面截圖
+### 主畫面
+
+<img width="778" height="443" alt="螢幕擷取畫面 2026-06-26 135734" src="https://github.com/user-attachments/assets/9d88420e-1f6e-45c9-ad57-fc7fb21853be" />
+
+### 新增餐廳
+
+<img width="785" height="536" alt="螢幕擷取畫面 2026-06-26 135918" src="https://github.com/user-attachments/assets/b3007209-92e2-4e46-a887-f275e931233b" />
+
+### 修改餐廳
+
+<img width="840" height="606" alt="螢幕擷取畫面 2026-06-26 135941" src="https://github.com/user-attachments/assets/c774daf6-2388-40b1-afd6-2e10e01a4244" />
+
+### 刪除餐廳
+
+<img width="502" height="269" alt="螢幕擷取畫面 2026-06-26 140026" src="https://github.com/user-attachments/assets/2a39beff-2f07-44a6-b9f9-493033011aad" />
+
+### 查詢所有餐廳
+
+<img width="881" height="536" alt="螢幕擷取畫面 2026-06-26 140007" src="https://github.com/user-attachments/assets/a5d3dc44-7da0-4d6f-b016-364034e60464" />
